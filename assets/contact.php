@@ -18,7 +18,7 @@
 
         // Set the recipient email address.
         // FIXME: Update this to your desired email address.
-        $recipient = "contactformtestgg@gmail.com";
+        // $recipient = "support@syberspace.com.ng";
 
         // Set the email subject.
         $subject = "New contact from $name";
@@ -29,10 +29,28 @@
         $email_content .= "Message:\n$message\n";
 
         // Build the email headers.
-        $email_headers = "From: $name <$email>";
+        // $email_headers = "From: $name <$email>";
 
-        // Send the email.
-        if (mail($recipient, $subject, $email_content, $email_headers)) {
+        
+$username = 'support@syberspace.com.ng'; // your email address
+$password = 'njzltw4vM!#o'; // your email address password
+
+$from = "support@syberspace.com.ng";
+$to = "support@syberspace.com.ng";
+// $body= "Name: ".$name." <br> Email: ".$email." <br>Message:".$message." ";
+
+$headers = array ('From' => $from, 'To' => $to, 'Subject' => $subject); // the email headers
+$smtp = Mail::factory('smtp', array ('host' =>'localhost', 'auth' => true, 'username' => $username, 'password' => $password, 'port' =>'25'));$mail = $smtp->send($to, $headers, $email_content); // sending the email
+
+if (PEAR::isError($mail)){
+// echo("<p>" . $mail->getMessage() . "</p>");
+// }
+// else {
+// // header("Location: http://www.example.com/"); // you can redirect page on successful submission.
+// }
+
+//         // Send the email.
+//         if (mail($recipient, $subject, $email_content, $email_headers)) {
             // Set a 200 (okay) response code.
             http_response_code(200);
             echo "Thank You! Your message has been sent.";
