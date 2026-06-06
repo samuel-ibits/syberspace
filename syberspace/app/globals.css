@@ -4,12 +4,18 @@ html {
   scroll-behavior: smooth;
 }
 
+* {
+  cursor: none !important;
+}
+
 body {
   background-color: #050b18;
   color: #f1f5f9;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  overflow-x: hidden;
 }
 
+/* ── Gradient text ── */
 .gradient-text {
   background: linear-gradient(135deg, #00d4ff, #7c3aed);
   -webkit-background-clip: text;
@@ -17,6 +23,7 @@ body {
   background-clip: text;
 }
 
+/* ── Grid background ── */
 .bg-grid {
   background-image:
     linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
@@ -24,38 +31,73 @@ body {
   background-size: 60px 60px;
 }
 
-.card-hover {
-  transition: all 0.3s ease;
+/* ── 3D perspective ── */
+.perspective-1000 {
+  perspective: 1000px;
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 212, 255, 0.12);
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #050b18; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#00d4ff, #7c3aed);
+  border-radius: 3px;
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: white;
+}
+
+/* ── Shimmer animation (for skeleton/hover effects) ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-16px); }
+/* ── Gradient border ── */
+.gradient-border-box {
+  position: relative;
+}
+.gradient-border-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #00d4ff, #7c3aed);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #050b18; }
-::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 3px; }
-
-@keyframes bubbleIn {
-  from { opacity: 0; transform: translateY(8px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+/* ── Input focus glow ── */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.15);
 }
 
-.bubble-in { animation: bubbleIn 0.25s ease forwards; }
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* ── Framer Motion reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
-
-.spin-slow { animation: spin-slow 20s linear infinite; }
