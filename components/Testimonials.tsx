@@ -51,9 +51,8 @@ function Card({ t, delay }: { t: typeof testimonials[0]; delay: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ delay, duration: 0.55 }}
-      whileHover={{ y: -5, boxShadow: "0 20px 60px rgba(0,212,255,0.08)" }}
-      className="p-6 rounded-2xl"
-      style={{ background: "var(--bg-surface)", border: "1px solid var(--border)" }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="p-6 rounded-2xl theme-card"
     >
       <div className="flex gap-1 mb-4">
         {Array.from({ length: t.stars }).map((_, i) => (

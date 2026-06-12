@@ -1,19 +1,20 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Navbar          from "@/components/Navbar";
-import Hero            from "@/components/Hero";
-import Services        from "@/components/Services";
-import HowItWorks      from "@/components/HowItWorks";
-import Pricing         from "@/components/Pricing";
-import About           from "@/components/About";
-import Testimonials    from "@/components/Testimonials";
-import Booking         from "@/components/Booking";
-import Footer          from "@/components/Footer";
-import AIChatWidget    from "@/components/AIChatWidget";
-import CustomCursor    from "@/components/CustomCursor";
+import Navbar       from "@/components/Navbar";
+import Hero         from "@/components/Hero";
+import Services     from "@/components/Services";
+import HowItWorks   from "@/components/HowItWorks";
+import Pricing      from "@/components/Pricing";
+import About        from "@/components/About";
+import Testimonials from "@/components/Testimonials";
+import Partners     from "@/components/Partners";
+import Booking      from "@/components/Booking";
+import Footer       from "@/components/Footer";
+import AIChatWidget from "@/components/AIChatWidget";
+import CustomCursor from "@/components/CustomCursor";
 
-export default function Home() {
+export default function HomeClient() {
   const [chatOpen, setChatOpen] = useState(false);
 
   return (
@@ -25,6 +26,7 @@ export default function Home() {
       <HowItWorks />
       <Pricing />
       <Testimonials />
+      <Partners />
       <About />
       <Booking onOpenChat={() => setChatOpen(true)} />
       <Footer />

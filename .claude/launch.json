@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "syberspace",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3001
+    },
+    {
+      "name": "generate-logo",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "3002", "public"],
+      "port": 3002
+    }
+  ]
+}

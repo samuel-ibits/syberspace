@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { useCounter } from "@/hooks/useCounter";
 
@@ -9,29 +9,32 @@ interface Particle { x: number; y: number; r: number; vx: number; vy: number; op
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
     let animId: number;
+
     const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
-    const particles: Particle[] = Array.from({ length: 80 }, () => ({
+
+    const particles: Particle[] = Array.from({ length: 70 }, () => ({
       x: Math.random() * canvas.width, y: Math.random() * canvas.height,
       r: Math.random() * 1.5 + 0.5,
-      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-      opacity: Math.random() * 0.4 + 0.1,
+      vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28,
+      opacity: Math.random() * 0.4 + 0.08,
     }));
 
-    const getAccent = () => {
-      const style = getComputedStyle(document.documentElement);
-      return style.getPropertyValue("--accent-cyan").trim() || "#00d4ff";
-    };
+    const isDark = () => document.documentElement.getAttribute("data-theme") !== "light";
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const accent = getAccent();
+      const dark = isDark();
+      const dotColor  = dark ? "0,212,255" : "0,120,180";
+      const lineAlpha = dark ? 0.06 : 0.04;
+
       particles.forEach(p => {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = canvas.width;
@@ -40,17 +43,18 @@ function ParticleCanvas() {
         if (p.y > canvas.height) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,212,255,${p.opacity})`;
+        ctx.fillStyle = `rgba(${dotColor},${p.opacity * (dark ? 1 : 0.5)})`;
         ctx.fill();
       });
+
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0,212,255,${0.06 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(${dotColor},${lineAlpha * (1 - d / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -63,10 +67,11 @@ function ParticleCanvas() {
     draw();
     return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize); };
   }, []);
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-60" />;
+
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-70" />;
 }
 
-/* ─── Animated stat counter ─── */
+/* ─── Stat counter ─── */
 function StatCounter({ value, suffix, label, active }: { value: number; suffix: string; label: string; active: boolean }) {
   const count = useCounter(value, 2000, active);
   return (
@@ -77,18 +82,15 @@ function StatCounter({ value, suffix, label, active }: { value: number; suffix: 
   );
 }
 
-/* ─── Per-word 3-D reveal ─── */
+/* ─── Word reveal ─── */
 function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   return (
     <>
       {text.split(" ").map((word, i) => (
-        <motion.span
-          key={i}
-          className="inline-block mr-[0.25em]"
+        <motion.span key={i} className="inline-block mr-[0.25em]"
           initial={{ opacity: 0, y: 30, rotateX: -40 }}
           animate={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ delay: delay + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
+          transition={{ delay: delay + i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
           {word}
         </motion.span>
       ))}
@@ -96,10 +98,42 @@ function WordReveal({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
+/* ─── Magnetic button ─── */
+function MagneticButton({ href, children, primary }: { href: string; children: React.ReactNode; primary?: boolean }) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+
+  return (
+    <motion.a ref={ref} href={href}
+      onMouseMove={e => {
+        const rect = ref.current?.getBoundingClientRect();
+        if (!rect) return;
+        setPos({ x: (e.clientX - rect.left - rect.width / 2) * 0.22, y: (e.clientY - rect.top - rect.height / 2) * 0.22 });
+      }}
+      onMouseLeave={() => setPos({ x: 0, y: 0 })}
+      animate={{ x: pos.x, y: pos.y }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      whileTap={{ scale: 0.97 }}
+      className="px-8 py-4 rounded-full font-bold text-lg select-none"
+      style={primary ? {
+        background: "linear-gradient(135deg, #06b6d4, #7c3aed)",
+        color: "white",
+        boxShadow: "0 8px 32px rgba(0,212,255,0.25)",
+      } : {
+        border: "1px solid var(--border-strong)",
+        color: "var(--text-primary)",
+        background: "var(--bg-surface)",
+      }}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
 const stats = [
-  { value: 50,  suffix: "+",  label: "Businesses Served" },
-  { value: 6,   suffix: "",   label: "AI Services" },
-  { value: 98,  suffix: "%",  label: "Client Satisfaction" },
+  { value: 50, suffix: "+",  label: "Businesses Served" },
+  { value: 6,  suffix: "",   label: "AI Services"        },
+  { value: 98, suffix: "%",  label: "Client Satisfaction" },
 ];
 
 export default function Hero() {
@@ -110,64 +144,55 @@ export default function Hero() {
   const opacity = useTransform(scrollY, [0, 400], [1,    0]);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid" style={{ background: "var(--bg-base)" }}>
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid"
+      style={{ background: "var(--bg-base)" }}>
       <ParticleCanvas />
 
       {/* Orbs */}
-      <motion.div style={{ y: y1, background: "var(--glow-cyan)" }} className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none" />
-      <motion.div style={{ y: y2, background: "var(--glow-violet)" }} className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none" />
+      <motion.div style={{ y: y1, background: "var(--glow-cyan)" }}
+        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none" />
+      <motion.div style={{ y: y2, background: "var(--glow-violet)" }}
+        className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none" />
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
 
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-sm font-medium mb-8"
-          style={{ borderColor: "rgba(0,212,255,0.3)", background: "rgba(0,212,255,0.06)", color: "var(--accent-cyan)" }}
-        >
-          <motion.span animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }} className="w-2 h-2 rounded-full bg-cyan-400 block" />
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-8 theme-badge-cyan">
+          <motion.span animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }}
+            className="w-2 h-2 rounded-full block" style={{ background: "var(--accent-cyan)" }} />
           AI-Powered Services · Available Now
         </motion.div>
 
         {/* Headline */}
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6" style={{ color: "var(--text-primary)", perspective: 1000 }}>
+        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6"
+          style={{ color: "var(--text-primary)", perspective: 1000 }}>
           <div><WordReveal text="Supercharge Your Business" delay={0.3} /></div>
           <div className="gradient-text"><WordReveal text="With AI — No Rebuilding" delay={0.6} /></div>
         </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 0.6 }}
           className="max-w-2xl mx-auto text-lg sm:text-xl mb-10 leading-relaxed"
-          style={{ color: "var(--text-muted)" }}
-        >
+          style={{ color: "var(--text-muted)" }}>
           We plug cutting-edge AI directly into your existing applications and workflows.
           Automation, insights, and intelligence — delivered as a service.
         </motion.p>
 
         {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
-        >
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <MagneticButton href="#booking" primary>Book Free Consultation</MagneticButton>
           <MagneticButton href="#services">Explore Services</MagneticButton>
         </motion.div>
 
         {/* Stats */}
-        <motion.div
-          ref={statsRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+        <motion.div ref={statsRef} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-10 max-w-lg mx-auto"
-        >
+          className="flex flex-col sm:flex-row items-center justify-center gap-10 max-w-lg mx-auto">
           {stats.map(s => <StatCounter key={s.label} {...s} active={statsVisible} />)}
           <div className="text-center">
             <div className="text-2xl font-extrabold gradient-text">24/7</div>
@@ -176,12 +201,10 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-xs"
-        style={{ color: "var(--text-faint)" }}
-      >
+      {/* Scroll cue */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center"
+        style={{ color: "var(--text-faint)" }}>
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -189,37 +212,5 @@ export default function Hero() {
         </motion.div>
       </motion.div>
     </section>
-  );
-}
-
-/* ─── Magnetic button ─── */
-function MagneticButton({ href, children, primary }: { href: string; children: React.ReactNode; primary?: boolean }) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    setPos({ x: (e.clientX - rect.left - rect.width / 2) * 0.25, y: (e.clientY - rect.top - rect.height / 2) * 0.25 });
-  };
-
-  return (
-    <motion.a
-      ref={ref}
-      href={href}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setPos({ x: 0, y: 0 })}
-      animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      whileTap={{ scale: 0.97 }}
-      className={`px-8 py-4 rounded-full font-bold text-lg transition-all ${
-        primary
-          ? "bg-gradient-to-r from-cyan-500 to-violet-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:shadow-xl"
-          : "text-sm"
-      }`}
-      style={!primary ? { border: "1px solid var(--border-strong)", color: "var(--text-primary)" } : {}}
-    >
-      {children}
-    </motion.a>
   );
 }

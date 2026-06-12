@@ -28,17 +28,14 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="py-24 relative overflow-hidden" style={{ background: "var(--bg-base)" }}>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none" style={{ background: "var(--glow-violet)" }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: "var(--glow-violet)" }} />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <div className="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4" style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)", color: "var(--accent-violet)" }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }} className="text-center mb-12">
+          <div className="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4"
+            style={{ background: "rgba(109,40,217,0.08)", border: "1px solid rgba(109,40,217,0.18)", color: "var(--accent-violet)" }}>
             Pricing
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
@@ -51,46 +48,36 @@ export default function Pricing() {
           {/* Toggle */}
           <div className="flex items-center justify-center gap-3">
             <span className="text-sm font-medium" style={{ color: annual ? "var(--text-faint)" : "var(--text-primary)" }}>Monthly</span>
-            <motion.button
-              onClick={() => setAnnual(!annual)}
+            <motion.button onClick={() => setAnnual(!annual)}
               className="relative w-12 h-6 rounded-full transition-colors duration-300"
-              style={{ background: annual ? "linear-gradient(to right, #06b6d4, #7c3aed)" : "var(--bg-elevated)" }}
-            >
+              style={{ background: annual ? "linear-gradient(to right, #06b6d4, #7c3aed)" : "var(--bg-elevated)", border: "1px solid var(--border)" }}>
               <motion.span animate={{ x: annual ? 24 : 0 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white" />
+                className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm" />
             </motion.button>
             <span className="text-sm font-medium" style={{ color: annual ? "var(--text-primary)" : "var(--text-faint)" }}>
-              Annual <span style={{ color: "#10b981" }} className="font-semibold">(Save 20%)</span>
+              Annual <span style={{ color: "#059669" }} className="font-semibold">(Save 20%)</span>
             </span>
           </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
           {plans.map((plan, i) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: i * 0.12, duration: 0.55 }}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className="relative p-8 rounded-2xl flex flex-col"
+            <motion.div key={plan.name}
+              initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }} transition={{ delay: i * 0.12, duration: 0.55 }}
+              whileHover={{ y: -6, transition: { duration: 0.22 } }}
+              className="relative p-8 rounded-2xl flex flex-col theme-card"
               style={plan.highlight ? {
-                background: "linear-gradient(to bottom, rgba(0,212,255,0.08), rgba(124,58,237,0.08))",
-                border: "1px solid rgba(0,212,255,0.35)",
-                boxShadow: "0 20px 60px rgba(0,212,255,0.08)",
-              } : {
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-              }}
-            >
+                background: "linear-gradient(to bottom, rgba(6,182,212,0.06), var(--bg-surface))",
+                borderColor: "rgba(6,182,212,0.35)",
+                boxShadow: "0 0 0 1px rgba(6,182,212,0.15), var(--card-shadow-lg)",
+              } : {}}>
+
               {plan.badge && (
-                <motion.span
-                  initial={{ scale: 0, y: -10 }} whileInView={{ scale: 1, y: 0 }} viewport={{ once: true }}
-                  transition={{ delay: 0.4, type: "spring", stiffness: 260 }}
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-xs font-bold whitespace-nowrap"
-                  style={{ background: "linear-gradient(to right, #06b6d4, #7c3aed)" }}
-                >
+                <motion.span initial={{ scale: 0, y: -10 }} whileInView={{ scale: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ delay: 0.4, type: "spring", stiffness: 260 }}
+                  className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-xs font-bold whitespace-nowrap"
+                  style={{ background: "linear-gradient(to right, #06b6d4, #7c3aed)", boxShadow: "0 4px 12px rgba(6,182,212,0.3)" }}>
                   {plan.badge}
                 </motion.span>
               )}
@@ -99,19 +86,25 @@ export default function Pricing() {
               <p className="text-sm mb-5" style={{ color: "var(--text-muted)" }}>{plan.description}</p>
 
               <AnimatePresence mode="wait">
-                <motion.div key={annual ? "a" : "m"} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} transition={{ duration: 0.2 }} className="mb-6">
-                  <span className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>{annual ? plan.price.annual : plan.price.monthly}</span>
-                  <span className="text-sm ml-1" style={{ color: "var(--text-muted)" }}>{annual ? plan.period.annual : plan.period.monthly}</span>
+                <motion.div key={annual ? "a" : "m"} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.18 }} className="mb-6">
+                  <span className="text-3xl font-extrabold" style={{ color: "var(--text-primary)" }}>
+                    {annual ? plan.price.annual : plan.price.monthly}
+                  </span>
+                  <span className="text-sm ml-1" style={{ color: "var(--text-muted)" }}>
+                    {annual ? plan.period.annual : plan.period.monthly}
+                  </span>
                 </motion.div>
               </AnimatePresence>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((f, fi) => (
-                  <motion.li key={f} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 + fi * 0.05 }} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-muted)" }}>
-                    <motion.svg initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.12 + fi * 0.05 + 0.1, type: "spring" }}
-                      className="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="var(--accent-cyan)" viewBox="0 0 24 24">
+                  <motion.li key={f} initial={{ opacity: 0, x: -8 }} whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.12 + fi * 0.05 }}
+                    className="flex items-start gap-2.5 text-sm" style={{ color: "var(--text-muted)" }}>
+                    <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="var(--accent-cyan)" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </motion.svg>
+                    </svg>
                     {f}
                   </motion.li>
                 ))}
@@ -122,19 +115,19 @@ export default function Pricing() {
                 style={plan.highlight ? {
                   background: "linear-gradient(to right, #06b6d4, #7c3aed)",
                   color: "white",
+                  boxShadow: "0 4px 16px rgba(6,182,212,0.25)",
                 } : {
-                  border: "1px solid var(--border-strong)",
+                  border: "1.5px solid var(--border-strong)",
                   color: "var(--text-primary)",
-                }}
-              >
+                }}>
                 {plan.cta}
               </motion.a>
             </motion.div>
           ))}
         </div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
-          className="text-center text-sm mt-8" style={{ color: "var(--text-faint)" }}>
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          transition={{ delay: 0.4 }} className="text-center text-sm mt-8" style={{ color: "var(--text-faint)" }}>
           All plans include a free 30-day trial · No credit card required · Cancel anytime
         </motion.p>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
+import Logo from "./Logo";
 
 const links = [
   { label: "Services",     href: "#services"     },
@@ -39,7 +39,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="#home" className="flex items-center">
-            <Image src="/logo.svg" alt="Syberspace" width={160} height={36} priority />
+            <Logo width={160} height={36} />
           </a>
 
           {/* Desktop links */}

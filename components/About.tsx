@@ -8,7 +8,7 @@ const faqs = [
   { q: "How long does it take to see results?",              a: "Most clients see measurable impact within the first 2 weeks of deployment. Full automation pipelines typically go live within 5-10 business days." },
   { q: "What industries do you serve?",                      a: "We work across finance, retail, logistics, healthcare, real estate, and more. AI automation applies to any business with repetitive processes or data." },
   { q: "Is my business data secure?",                        a: "Absolutely. We use enterprise-grade encryption, sign NDAs, and never share your data. Your data stays yours — always." },
-  { q: "How do I get started?",                              a: "Book a free consultation (Calendly, AI chat, email, or call) and we'll map out the best AI services for your business within 24 hours." },
+  { q: "How do I get started?",                              a: "Book a free consultation via our AI chat, Google Calendar, email, or phone — and we'll map out the best AI services for your business within 24 hours." },
 ];
 
 const companyStats = [
@@ -21,7 +21,7 @@ const companyStats = [
 function AnimatedStat({ stat, active }: { stat: typeof companyStats[0]; active: boolean }) {
   const count = useCounter(stat.value, 2000, active);
   return (
-    <motion.div whileHover={{ scale: 1.05 }} className="p-4 rounded-xl" style={{ background: "var(--bg-surface)", border: "1px solid var(--border)" }}>
+    <motion.div whileHover={{ scale: 1.05 }} className="p-4 rounded-xl theme-card">
       <div className="text-2xl font-extrabold gradient-text">{count}{stat.suffix}</div>
       <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{stat.label}</div>
     </motion.div>
@@ -38,7 +38,7 @@ export default function About() {
 
           {/* Left */}
           <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7 }}>
-            <div className="inline-block px-4 py-1 rounded-full text-sm font-medium mb-6" style={{ background: "rgba(0,212,255,0.08)", border: "1px solid rgba(0,212,255,0.2)", color: "var(--accent-cyan)" }}>
+            <div className="inline-block px-4 py-1 rounded-full text-sm font-medium mb-6 theme-badge-cyan">
               About Syberspace
             </div>
             <h2 className="text-4xl font-bold mb-6" style={{ color: "var(--text-primary)" }}>
@@ -66,8 +66,7 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
-                  className="group p-5 rounded-xl cursor-pointer"
-                  style={{ background: "var(--bg-surface)", border: "1px solid var(--border)" }}
+                  className="group p-5 rounded-xl cursor-pointer theme-card"
                 >
                   <summary className="flex items-center justify-between font-semibold text-sm list-none select-none" style={{ color: "var(--text-primary)" }}>
                     {faq.q}
