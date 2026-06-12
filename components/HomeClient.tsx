@@ -5,10 +5,14 @@ import Navbar       from "@/components/Navbar";
 import Hero         from "@/components/Hero";
 import Services     from "@/components/Services";
 import HowItWorks   from "@/components/HowItWorks";
+import Stats        from "@/components/Stats";
 import Pricing      from "@/components/Pricing";
-import About        from "@/components/About";
+import CaseStudies  from "@/components/CaseStudies";
 import Testimonials from "@/components/Testimonials";
 import Partners     from "@/components/Partners";
+import FAQ          from "@/components/FAQ";
+import Blog         from "@/components/Blog";
+import About        from "@/components/About";
 import Booking      from "@/components/Booking";
 import Footer       from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
@@ -23,10 +27,14 @@ export default function HomeClient() {
       <Navbar />
       <Hero />
       <Services />
+      <Stats />
       <HowItWorks />
+      <CaseStudies />
       <Pricing />
       <Testimonials />
       <Partners />
+      <FAQ />
+      <Blog />
       <About />
       <Booking onOpenChat={() => setChatOpen(true)} />
       <Footer />

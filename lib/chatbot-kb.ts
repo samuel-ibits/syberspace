@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════
    SYBERSPACE — CHATBOT KNOWLEDGE BASE
    Syber is Syberspace's AI consultant chatbot.
-   Contact: syberspace247@gmail.com | +234 815 151 9625
+   Contact: syberspace247@gmail.com | +234 808 626 9431
    Facebook: https://web.facebook.com/syberspacenetwork
 ═══════════════════════════════════════════════════════ */
 
@@ -312,7 +312,7 @@ If your industry isn't listed, AI almost certainly applies to your business. The
   support: `Our support channels:
 
 📧 **Email:** syberspace247@gmail.com *(response within 24 hours)*
-📞 **Phone/WhatsApp:** +234 815 151 9625 *(Mon–Fri, 9am–6pm WAT)*
+📞 **Phone/WhatsApp:** +234 808 626 9431 *(Mon–Fri, 9am–6pm WAT)*
 💬 **Live chat:** You're already in it! I can escalate to a human agent.
 📅 **Scheduled call:** Book via Calendly for a guaranteed time slot.
 
@@ -321,8 +321,8 @@ Would you like me to connect you with a human agent right now, or is there somet
   contact: `You can reach Syberspace through:
 
 📧 **Email:** syberspace247@gmail.com
-📞 **Phone:** +234 815 151 9625
-💬 **WhatsApp:** +234 815 151 9625
+📞 **Phone:** +234 808 626 9431
+💬 **WhatsApp:** +234 808 626 9431
 📅 **Calendly:** Book a free 30-min consultation online
 📱 **Facebook:** facebook.com/syberspacenetwork
 

@@ -216,7 +216,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       setFlow("idle"); setHuman({});
       submitHumanRequest(final);
       addBot(
-        `✅ **Got it!**\n\n👤 **Name:** ${name}\n📬 **Contact:** ${contact}\n💬 **Issue:** ${t}\n\nA team member will reach out to you **within a few hours**.\n\nFor urgent matters: 📞 **+234 815 151 9625** or 📧 **syberspace247@gmail.com**`,
+        `✅ **Got it!**\n\n👤 **Name:** ${name}\n📬 **Contact:** ${contact}\n💬 **Issue:** ${t}\n\nA team member will reach out to you **within a few hours**.\n\nFor urgent matters: 📞 **+234 808 626 9431** or 📧 **syberspace247@gmail.com**`,
         QUICK_REPLIES_DEFAULT
       ); return true;
     }
@@ -305,7 +305,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       if (e instanceof Error && e.name === "AbortError") return;
       setMessages(p => {
         const copy = [...p];
-        copy[copy.length - 1] = { role: "assistant", text: "Sorry, I hit a snag. Please try again or reach us directly at **syberspace247@gmail.com** or **+234 815 151 9625**." };
+        copy[copy.length - 1] = { role: "assistant", text: "Sorry, I hit a snag. Please try again or reach us directly at **syberspace247@gmail.com** or **+234 808 626 9431**." };
         return copy;
       });
       setQR(["Try again", "Talk to a human", "Book consultation"]);

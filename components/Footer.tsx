@@ -4,10 +4,12 @@ import Logo from "./Logo";
 
 const services = ["Process Automation", "Web Scraping", "Data Cleaning", "AI Bots", "Data Analysis", "AI Consultation"];
 const company  = [
-  { label: "About Us",      href: "#about"       },
-  { label: "Pricing",       href: "#pricing"      },
-  { label: "How It Works",  href: "#how-it-works" },
-  { label: "Testimonials",  href: "#testimonials" },
+  { label: "About Us",      href: "#about"         },
+  { label: "Pricing",       href: "#pricing"        },
+  { label: "How It Works",  href: "#how-it-works"   },
+  { label: "Case Studies",  href: "#case-studies"   },
+  { label: "FAQ",           href: "#faq"            },
+  { label: "Insights",      href: "#insights"       },
 ];
 
 const containerVariants: Variants = {
@@ -89,8 +91,9 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { icon: "📧", label: "syberspace247@gmail.com", href: "mailto:syberspace247@gmail.com" },
-                { icon: "📞", label: "+234 815 151 9625",        href: "tel:+2348151519625"              },
-                { icon: "💬", label: "WhatsApp",                 href: "https://wa.me/2348151519625?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services." },
+                { icon: "📞", label: "+234 808 626 9431",        href: "tel:+2348086269431"              },
+                { icon: "💬", label: "WhatsApp",                 href: "https://wa.me/2348086269431?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services." },
+                { icon: "📍", label: "Lagos, Nigeria",           href: "https://maps.google.com/?q=Lagos,Nigeria" },
               ].map(c => (
                 <li key={c.label}>
                   <motion.a href={c.href} whileHover={{ x: 4 }} className="flex items-center gap-2 text-sm transition-colors" style={{ color: "var(--text-muted)" }}>
