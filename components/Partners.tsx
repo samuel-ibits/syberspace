@@ -11,7 +11,7 @@ const partners = [
   { name: "Virtual Try On", url: "https://virtualtryon.com",    domain: "virtualtryon.com"   },
   { name: "FastCars",       url: "https://fast4car.com",        domain: "fast4car.com"       },
   { name: "Teesas",         url: "https://teesas.com",          domain: "teesas.com"         },
-  { name: "Herewa",         url: "http://harewa.com",           domain: "harewa.com"         },
+  { name: "Herewa",         url: "https://harewa.com/home",           domain: "harewa.com"         },
   { name: "BrickBytes",     url: "https://brickbytes.app",      domain: "brickbytes.app"     },
   { name: "Requstory",      url: "https://requstory.com",       domain: "requstory.com"      },
   { name: "DocuHelp",       url: "https://docuhelp.ai",         domain: "docuhelp.ai"        },

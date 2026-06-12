@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const EFFECTIVE = "11 June 2025";
 const COMPANY   = "Syberspace";
-const EMAIL     = "support@syberspace.com.ng";
+const EMAIL     = "syberspace247@gmail.com";
 const PHONE     = "+234 815 151 9625";
 
 export default function TermsOfService() {

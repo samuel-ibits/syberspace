@@ -88,7 +88,7 @@ export default function Footer() {
             <h4 className="font-semibold text-sm mb-4" style={{ color: "var(--text-primary)" }}>Contact</h4>
             <ul className="space-y-3">
               {[
-                { icon: "📧", label: "support@syberspace.com.ng", href: "mailto:support@syberspace.com.ng" },
+                { icon: "📧", label: "syberspace247@gmail.com", href: "mailto:syberspace247@gmail.com" },
                 { icon: "📞", label: "+234 815 151 9625",        href: "tel:+2348151519625"              },
                 { icon: "💬", label: "WhatsApp",                 href: "https://wa.me/2348151519625?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services." },
               ].map(c => (

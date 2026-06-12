@@ -19,7 +19,7 @@ export default function StructuredData() {
       "Syberspace is a Nigerian AI-as-a-Service company that integrates cutting-edge artificial intelligence into existing business systems — delivering process automation, web scraping, data cleaning, AI bots, data analysis, and strategic AI consultation.",
     foundingDate: "2019",
     areaServed: ["Nigeria", "Africa", "Global"],
-    email: "support@syberspace.com.ng",
+    email: "syberspace247@gmail.com",
     telephone: "+2348151519625",
     sameAs: [
       "https://web.facebook.com/syberspacenetwork",
@@ -29,7 +29,7 @@ export default function StructuredData() {
       "@type": "ContactPoint",
       telephone: "+2348151519625",
       contactType: "customer service",
-      email: "support@syberspace.com.ng",
+      email: "syberspace247@gmail.com",
       availableLanguage: "English",
       contactOption: "TollFree",
     },
@@ -57,7 +57,7 @@ export default function StructuredData() {
     name: "Syberspace",
     url: SITE,
     telephone: "+2348151519625",
-    email: "support@syberspace.com.ng",
+    email: "syberspace247@gmail.com",
     description:
       "AI automation, chatbot development, data analysis, and AI consultation services for businesses across Nigeria and Africa.",
     priceRange: "₦₦",
@@ -171,7 +171,7 @@ export default function StructuredData() {
         name: "How do I get started with Syberspace AI services?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Book a free 30-minute consultation via the AI chat on our website, Google Calendar, email at support@syberspace.com.ng, or call +234 815 151 9625. We'll map out the best AI services for your business within 24 hours.",
+          text: "Book a free 30-minute consultation via the AI chat on our website, Google Calendar, email at syberspace247@gmail.com, or call +234 815 151 9625. We'll map out the best AI services for your business within 24 hours.",
         },
       },
       {

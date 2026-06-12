@@ -182,7 +182,7 @@ export async function POST(req: NextRequest) {
       ``,
       `Join the video call: ${meetLink}`,
       ``,
-      `Questions? Email support@syberspace.com.ng or WhatsApp +234 815 151 9625`,
+      `Questions? Email syberspace247@gmail.com or WhatsApp +234 815 151 9625`,
     ].join("\n"),
     location: meetLink,
     start,
@@ -265,7 +265,7 @@ export async function POST(req: NextRequest) {
             <hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0"/>
             <p style="color:#6b7280;font-size:13px">Questions? Reply to this email or WhatsApp us at <strong>+234 815 151 9625</strong>.</p>
           </div>
-          <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:12px">Syberspace · support@syberspace.com.ng</p>
+          <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:12px">Syberspace · syberspace247@gmail.com</p>
         </div>`,
     });
   } catch (err) {
