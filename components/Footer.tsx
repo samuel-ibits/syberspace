@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 const services = ["Process Automation", "Web Scraping", "Data Cleaning", "AI Bots", "Data Analysis", "AI Consultation"];
 const company  = [
-  { label: "About Us",      href: "#about"         },
+  { label: "About Us",      href: "/about"         },
   { label: "Pricing",       href: "#pricing"        },
   { label: "How It Works",  href: "#how-it-works"   },
   { label: "Case Studies",  href: "#case-studies"   },
@@ -93,7 +93,6 @@ export default function Footer() {
                 { icon: "📧", label: "syberspace247@gmail.com", href: "mailto:syberspace247@gmail.com" },
                 { icon: "📞", label: "+234 808 626 9431",        href: "tel:+2348086269431"              },
                 { icon: "💬", label: "WhatsApp",                 href: "https://wa.me/2348086269431?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services." },
-                { icon: "📍", label: "Lagos, Nigeria",           href: "https://maps.google.com/?q=Lagos,Nigeria" },
               ].map(c => (
                 <li key={c.label}>
                   <motion.a href={c.href} whileHover={{ x: 4 }} className="flex items-center gap-2 text-sm transition-colors" style={{ color: "var(--text-muted)" }}>
@@ -101,6 +100,12 @@ export default function Footer() {
                   </motion.a>
                 </li>
               ))}
+              <li className="pt-1">
+                <div className="flex items-start gap-2 text-sm" style={{ color: "var(--text-muted)" }}>
+                  <span className="text-base flex-shrink-0">📍</span>
+                  <span>After 2nd Transformer, 4 Abdullahi Sabah St, Momoh Sani Ave, Gwagwalada, FCT</span>
+                </div>
+              </li>
             </ul>
           </motion.div>
         </div>

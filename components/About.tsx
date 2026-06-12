@@ -45,11 +45,27 @@ export default function About() {
               We Bring AI to <span className="gradient-text">Every Business</span>
             </h2>
             <p className="leading-relaxed mb-6" style={{ color: "var(--text-muted)" }}>
-              Syberspace is a Software-as-a-Service company focused on one mission: making enterprise-grade AI accessible to every business — regardless of size or technical maturity.
+              Syberspace is Nigeria&apos;s leading AI-as-a-Service company — making enterprise-grade AI accessible to every business, regardless of size or technical maturity.
             </p>
-            <p className="leading-relaxed mb-8" style={{ color: "var(--text-muted)" }}>
-              We don't sell generic tools. We sit down with your team, understand your unique challenges, and engineer AI solutions that deliver real, measurable ROI. From Lagos to the world.
+            <p className="leading-relaxed mb-6" style={{ color: "var(--text-muted)" }}>
+              We don&apos;t sell generic tools. We sit with your team, understand your unique challenges, and engineer AI solutions that deliver real, measurable ROI. From Abuja and Lagos to clients across Africa and beyond.
             </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              {[
+                { icon: "🌍", title: "Global reach", desc: "Serving clients across Nigeria, Ghana, Kenya & South Africa" },
+                { icon: "🔄", title: "Post-project support", desc: "Monthly reviews, continuous optimisation & dedicated account management" },
+                { icon: "⚡", title: "Fast deployment", desc: "Most solutions go live within 5–10 business days" },
+                { icon: "🔒", title: "Enterprise security", desc: "Encrypted data, signed NDAs, full client data ownership" },
+              ].map(item => (
+                <div key={item.title} className="flex gap-3 p-3 rounded-xl" style={{ background: "var(--bg-base)", border: "1px solid var(--border)" }}>
+                  <span className="text-xl flex-shrink-0">{item.icon}</span>
+                  <div>
+                    <p className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>{item.title}</p>
+                    <p className="text-xs" style={{ color: "var(--text-muted)" }}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div ref={ref} className="grid grid-cols-2 gap-4">
               {companyStats.map(s => <AnimatedStat key={s.label} stat={s} active={inView} />)}
             </div>

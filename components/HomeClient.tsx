@@ -13,6 +13,8 @@ import Partners     from "@/components/Partners";
 import FAQ          from "@/components/FAQ";
 import Blog         from "@/components/Blog";
 import About        from "@/components/About";
+import Contact      from "@/components/Contact";
+import Newsletter   from "@/components/Newsletter";
 import Booking      from "@/components/Booking";
 import Footer       from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
@@ -36,6 +38,8 @@ export default function HomeClient() {
       <FAQ />
       <Blog />
       <About />
+      <Contact />
+      <Newsletter />
       <Booking onOpenChat={() => setChatOpen(true)} />
       <Footer />
 
