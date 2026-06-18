@@ -1,75 +1,11 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { useCounter } from "@/hooks/useCounter";
 
-/* ─── Particle canvas ─── */
-interface Particle { x: number; y: number; r: number; vx: number; vy: number; opacity: number }
-
-function ParticleCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
-    let animId: number;
-
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const particles: Particle[] = Array.from({ length: 70 }, () => ({
-      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.5,
-      vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28,
-      opacity: Math.random() * 0.4 + 0.08,
-    }));
-
-    const isDark = () => document.documentElement.getAttribute("data-theme") !== "light";
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const dark = isDark();
-      const dotColor  = dark ? "0,212,255" : "0,120,180";
-      const lineAlpha = dark ? 0.06 : 0.04;
-
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${dotColor},${p.opacity * (dark ? 1 : 0.5)})`;
-        ctx.fill();
-      });
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const d  = Math.sqrt(dx * dx + dy * dy);
-          if (d < 120) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(${dotColor},${lineAlpha * (1 - d / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(animId); window.removeEventListener("resize", resize); };
-  }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-70" />;
-}
+const HeroCanvas = dynamic(() => import("@/components/HeroCanvas"), { ssr: false });
 
 /* ─── Stat counter ─── */
 function StatCounter({ value, suffix, label, active }: { value: number; suffix: string; label: string; active: boolean }) {
@@ -146,7 +82,7 @@ export default function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid"
       style={{ background: "var(--bg-base)" }}>
-      <ParticleCanvas />
+      <HeroCanvas />
 
       {/* Orbs */}
       <motion.div style={{ y: y1, background: "var(--glow-cyan)" }}
