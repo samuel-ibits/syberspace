@@ -87,7 +87,7 @@ export default function Newsletter() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   className="px-6 py-3 rounded-xl text-sm font-semibold text-white flex-shrink-0 disabled:opacity-60"
-                  style={{ background: "linear-gradient(135deg, #06b6d4, #7c3aed)" }}
+                  style={{ background: "#06b6d4", color: "#0a0f1e" }}
                 >
                   {status === "loading" ? "Subscribing…" : "Subscribe Free"}
                 </motion.button>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible]   = useState(false);
   const [clicking, setClicking] = useState(false);
   const [hovering, setHovering] = useState(false);
 
@@ -22,12 +22,10 @@ export default function CustomCursor() {
       if (!visible) setVisible(true);
     };
     const down = () => setClicking(true);
-    const up = () => setClicking(false);
-
+    const up   = () => setClicking(false);
     const checkHover = () => {
       const el = document.elementFromPoint(mouseX.get(), mouseY.get());
-      const isClickable = el?.closest("a,button,[role=button],input,textarea,select,details") != null;
-      setHovering(isClickable);
+      setHovering(el?.closest("a,button,[role=button],input,textarea,select,details") != null);
     };
 
     window.addEventListener("mousemove", move);
@@ -40,31 +38,38 @@ export default function CustomCursor() {
       window.removeEventListener("mousedown", down);
       window.removeEventListener("mouseup", up);
     };
-  }, [visible]);
+  }, [visible, mouseX, mouseY]);
 
-  // Only on desktop
   if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) return null;
 
   return (
     <>
-      {/* Trail dot */}
+      {/* Trailing ring */}
       <motion.div
         style={{ x: trailX, y: trailY }}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
-        animate={{ scale: clicking ? 0.6 : hovering ? 2.5 : 1, opacity: visible ? 1 : 0 }}
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        animate={{ scale: clicking ? 0.7 : hovering ? 1.8 : 1, opacity: visible ? 0.5 : 0 }}
         transition={{ scale: { type: "spring", stiffness: 300, damping: 20 } }}
       >
-        <div className="w-8 h-8 rounded-full border border-cyan-400/60 -translate-x-1/2 -translate-y-1/2" />
+        <div className="w-8 h-8 rounded-full border border-cyan-400 -translate-x-1/2 -translate-y-1/2" />
       </motion.div>
-      {/* Main dot */}
+
+      {/* Crosshair cursor */}
       <motion.div
         style={{ x: springX, y: springY }}
         className="fixed top-0 left-0 pointer-events-none z-[9999]"
-        animate={{ scale: clicking ? 0.7 : 1, opacity: visible ? 1 : 0 }}
+        animate={{ scale: clicking ? 0.75 : hovering ? 1.3 : 1, opacity: visible ? 1 : 0 }}
+        transition={{ scale: { type: "spring", stiffness: 400, damping: 22 } }}
       >
-        <div className={`rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${
-          hovering ? "w-3 h-3 bg-cyan-400" : "w-2 h-2 bg-cyan-400"
-        }`} />
+        {/* Horizontal bar */}
+        <div className="absolute bg-cyan-400 -translate-x-1/2 -translate-y-1/2"
+          style={{ width: hovering ? 14 : 12, height: 1.5, left: 0, top: 0 }} />
+        {/* Vertical bar */}
+        <div className="absolute bg-cyan-400 -translate-x-1/2 -translate-y-1/2"
+          style={{ width: 1.5, height: hovering ? 14 : 12, left: 0, top: 0 }} />
+        {/* Centre dot */}
+        <div className="absolute bg-cyan-400 rounded-full -translate-x-1/2 -translate-y-1/2"
+          style={{ width: 3, height: 3, left: 0, top: 0 }} />
       </motion.div>
     </>
   );

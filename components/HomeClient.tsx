@@ -55,7 +55,7 @@ export default function HomeClient() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full flex items-center justify-center text-white"
-            style={{ background: "linear-gradient(135deg, #06b6d4, #7c3aed)", boxShadow: "0 8px 32px rgba(0,212,255,0.3)" }}
+            style={{ background: "#06b6d4", boxShadow: "0 8px 32px rgba(6,182,212,0.3)" }}
             aria-label="Open AI chat"
           >
             <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 3 }}>

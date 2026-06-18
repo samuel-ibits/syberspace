@@ -52,9 +52,9 @@ function MagneticButton({ href, children, primary }: { href: string; children: R
       whileTap={{ scale: 0.97 }}
       className="px-8 py-4 rounded-full font-bold text-lg select-none"
       style={primary ? {
-        background: "linear-gradient(135deg, #06b6d4, #7c3aed)",
-        color: "white",
-        boxShadow: "0 8px 32px rgba(0,212,255,0.25)",
+        background: "#06b6d4",
+        color: "#0a0f1e",
+        boxShadow: "0 6px 24px rgba(6,182,212,0.3)",
       } : {
         border: "1px solid var(--border-strong)",
         color: "var(--text-primary)",
