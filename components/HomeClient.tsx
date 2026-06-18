@@ -28,13 +28,13 @@ export default function HomeClient() {
       <CustomCursor />
       <Navbar />
       <Hero />
+      <Partners />
       <Services />
       <Stats />
       <HowItWorks />
       <CaseStudies />
       <Pricing />
       <Testimonials />
-      <Partners />
       <FAQ />
       <Blog />
       <About />
