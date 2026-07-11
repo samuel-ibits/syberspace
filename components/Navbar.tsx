@@ -72,10 +72,14 @@ export default function Navbar() {
             <ThemeToggle />
             <a
               href="#booking"
-              className="relative px-5 py-2 rounded-full text-white text-sm font-semibold overflow-hidden group"
+              className="px-5 py-2 rounded-full text-sm font-semibold transition-opacity hover:opacity-90"
+              style={{
+                background: "var(--accent-cyan)",
+                color: "#0a0f1e",
+                boxShadow: "0 6px 18px rgba(6,182,212,0.24)",
+              }}
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-violet-600 transition-all duration-300 group-hover:opacity-90" />
-              <span className="relative">Book Consultation</span>
+              Book Consultation
             </a>
           </motion.div>
 
@@ -121,7 +125,11 @@ export default function Navbar() {
                 <a
                   href="#booking"
                   onClick={() => setOpen(false)}
-                  className="block mt-3 px-5 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-violet-600 text-white text-sm font-semibold text-center"
+                  className="block mt-3 px-5 py-2 rounded-full text-sm font-semibold text-center transition-opacity hover:opacity-90"
+                  style={{
+                    background: "var(--accent-cyan)",
+                    color: "#0a0f1e",
+                  }}
                 >
                   Book Consultation
                 </a>

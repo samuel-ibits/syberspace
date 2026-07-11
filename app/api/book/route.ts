@@ -257,7 +257,7 @@ export async function POST(req: NextRequest) {
               <tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Requested time</td><td style="padding:8px 0;font-size:14px">${time}</td></tr>
             </table>
             <div style="text-align:center;margin:24px 0">
-              <a href="${meetLink}" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#06b6d4,#7c3aed);color:#fff;font-weight:700;border-radius:50px;text-decoration:none;font-size:15px">Join ${videoLabel}</a>
+              <a href="${meetLink}" style="display:inline-block;padding:12px 28px;background:#06b6d4;color:#0a0f1e;font-weight:700;border-radius:50px;text-decoration:none;font-size:15px">Join ${videoLabel}</a>
             </div>
             <div style="padding:12px 16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;margin-bottom:16px">
               <p style="color:#166534;font-size:13px;margin:0">📅 <strong>Calendar invite attached</strong> — open the .ics file to add this to Google Calendar, Outlook, or Apple Calendar.</p>

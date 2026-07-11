@@ -87,7 +87,7 @@ export default function FAQ() {
                   animate={{ rotate: open === i ? 45 : 0 }}
                   transition={{ duration: 0.2 }}
                   className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-lg font-light"
-                  style={{ background: open === i ? "linear-gradient(135deg,#06b6d4,#7c3aed)" : "var(--bg-elevated)", color: open === i ? "#fff" : "var(--text-muted)" }}
+                  style={{ background: open === i ? "var(--accent-cyan)" : "var(--bg-elevated)", color: open === i ? "#0a0f1e" : "var(--text-muted)" }}
                 >
                   +
                 </motion.span>

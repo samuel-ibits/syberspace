@@ -92,15 +92,6 @@ export default function Hero() {
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
 
-        {/* Badge */}
-        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium mb-8 theme-badge-cyan">
-          <motion.span animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }}
-            className="w-2 h-2 rounded-full block" style={{ background: "var(--accent-cyan)" }} />
-          AI-Powered Services · Available Now
-        </motion.div>
-
         {/* Headline */}
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6"
           style={{ color: "var(--text-primary)", perspective: 1000 }}>

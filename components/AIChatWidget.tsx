@@ -1,18 +1,88 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { ChatSessionStatus } from "@/lib/chat-types";
 
-type Message = { role: "user" | "assistant"; text: string; streaming?: boolean };
+type Message = { id: string; role: "user" | "assistant" | "agent" | "system"; text: string; createdAt: string; streaming?: boolean };
 type FlowStep = "idle" | "book_name" | "book_email" | "book_service" | "book_time" | "human_name" | "human_contact" | "human_issue";
 
 const QUICK_REPLIES_DEFAULT = ["Our services", "Pricing", "Free AI Audit", "Book consultation", "Talk to a human"];
+const CHAT_SESSION_KEY = "syberspace_chat_session_id";
+const CHAT_MESSAGES_KEY = "syberspace_chat_messages";
+const CHAT_AGENT_MODE_KEY = "syberspace_chat_agent_mode";
+const LOCAL_STORAGE_ENCODING_PREFIX = "encoded:v1:";
 
 const SERVICES_MAP: Record<string, string> = {
   "1": "Process Automation", "2": "Web Scraping", "3": "Data Cleaning",
   "4": "AI Bots", "5": "Data Analysis", "6": "AI Consultation", "7": "Not sure yet",
 };
 
+const HUMAN_AGENT_WHATSAPP = "2348151519625";
+
 function isValidEmail(v: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+function createId(prefix: string) {
+  const random = typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  return `${prefix}-${random}`;
+}
+
+function createMessage(role: Message["role"], text: string, id = createId(role)): Message {
+  return { id, role, text, createdAt: new Date().toISOString() };
+}
+
+function encodeLocalStorageValue(value: string) {
+  try {
+    const bytes = new TextEncoder().encode(value);
+    let binary = "";
+    bytes.forEach(byte => {
+      binary += String.fromCharCode(byte);
+    });
+    return `${LOCAL_STORAGE_ENCODING_PREFIX}${btoa(binary)}`;
+  } catch {
+    return value;
+  }
+}
+
+function decodeLocalStorageValue(value: string) {
+  if (!value.startsWith(LOCAL_STORAGE_ENCODING_PREFIX)) return value;
+
+  try {
+    const binary = atob(value.slice(LOCAL_STORAGE_ENCODING_PREFIX.length));
+    const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return "";
+  }
+}
+
+function getLocalStorageValue(key: string) {
+  const value = window.localStorage.getItem(key);
+  return value ? decodeLocalStorageValue(value) : null;
+}
+
+function setLocalStorageValue(key: string, value: string) {
+  window.localStorage.setItem(key, encodeLocalStorageValue(value));
+}
+
+const INITIAL_MESSAGE = createMessage(
+  "assistant",
+  "Hey there! 👋 I'm **Syber**, Syberspace's AI consultant.\n\nI can answer questions about our services and pricing, help you book a consultation, or connect you with a human agent.\n\nWhat can I help you with today?",
+  "welcome",
+);
+
+function buildHumanHandoffUrl(data: Record<string, string>) {
+  const text = [
+    "Hi Syberspace, I need to speak with a human agent.",
+    "",
+    `Name: ${data.name ?? ""}`,
+    `Contact: ${data.contact ?? ""}`,
+    `Issue: ${data.issue ?? ""}`,
+  ].join("\n");
+
+  return `https://wa.me/${HUMAN_AGENT_WHATSAPP}?text=${encodeURIComponent(text)}`;
+}
 
 /* ── Markdown renderer — links become buttons ───── */
 function BotMessage({ text }: { text: string }) {
@@ -99,28 +169,165 @@ const FLOW_PLACEHOLDER: Record<FlowStep, string> = {
 };
 
 export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [messages, setMessages] = useState<Message[]>([{
-    role: "assistant",
-    text: "Hey there! 👋 I'm **Syber**, Syberspace's AI consultant.\n\nI can answer questions about our services and pricing, help you book a consultation, or connect you with a human agent.\n\nWhat can I help you with today?",
-  }]);
+  const [sessionId, setSessionId] = useState("");
+  const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput]       = useState("");
   const [flow, setFlow]         = useState<FlowStep>("idle");
   const [booking, setBooking]   = useState<Record<string, string>>({});
   const [human, setHuman]       = useState<Record<string, string>>({});
   const [qr, setQR]             = useState<string[]>(QUICK_REPLIES_DEFAULT);
+  const [agentMode, setAgentMode] = useState(false);
   const [busy, setBusy]         = useState(false);
   const bottomRef               = useRef<HTMLDivElement>(null);
   const abortRef                = useRef<AbortController | null>(null);
+  const syncedMessageIdsRef     = useRef<Set<string>>(new Set(["welcome"]));
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let storedSessionId = getLocalStorageValue(CHAT_SESSION_KEY);
+    if (!storedSessionId) {
+      storedSessionId = createId("session");
+    }
+    setLocalStorageValue(CHAT_SESSION_KEY, storedSessionId);
+
+    setSessionId(storedSessionId);
+    setAgentMode(getLocalStorageValue(CHAT_AGENT_MODE_KEY) === "1");
+
+    const storedMessages = getLocalStorageValue(CHAT_MESSAGES_KEY);
+    if (!storedMessages) return;
+
+    try {
+      const parsed = JSON.parse(storedMessages) as Message[];
+      const restored = parsed
+        .filter(message => message && message.text && message.role)
+        .map(message => ({
+          ...message,
+          id: message.id ?? createId(message.role),
+          createdAt: message.createdAt ?? new Date().toISOString(),
+        }));
+
+      if (restored.length > 0) {
+        restored.forEach(message => syncedMessageIdsRef.current.add(message.id));
+        setMessages(restored);
+        setLocalStorageValue(CHAT_MESSAGES_KEY, JSON.stringify(restored));
+      }
+    } catch { /* ignore corrupt local chat cache */ }
+  }, []);
+
+  useEffect(() => {
+    if (!sessionId || typeof window === "undefined") return;
+    const stableMessages = messages.filter(message => !message.streaming);
+    setLocalStorageValue(CHAT_MESSAGES_KEY, JSON.stringify(stableMessages));
+  }, [messages, sessionId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setLocalStorageValue(CHAT_AGENT_MODE_KEY, agentMode ? "1" : "0");
+  }, [agentMode]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const syncChatMessage = useCallback(async (
+    message: Message,
+    options?: { visitorName?: string; visitorContact?: string; status?: ChatSessionStatus },
+  ) => {
+    if (!sessionId || message.streaming || syncedMessageIdsRef.current.has(message.id)) return;
+
+    syncedMessageIdsRef.current.add(message.id);
+    try {
+      await fetch("/api/chat-sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId,
+          visitorName: options?.visitorName,
+          visitorContact: options?.visitorContact,
+          status: options?.status,
+          message: {
+            id: message.id,
+            clientMessageId: message.id,
+            role: message.role,
+            text: message.text,
+            createdAt: message.createdAt,
+          },
+        }),
+      });
+    } catch {
+      syncedMessageIdsRef.current.delete(message.id);
+    }
+  }, [sessionId]);
+
+  const updateRemoteSession = useCallback(async (patch: {
+    visitorName?: string;
+    visitorContact?: string;
+    status?: ChatSessionStatus;
+    readBy?: "agent" | "visitor";
+  }) => {
+    if (!sessionId) return;
+
+    try {
+      await fetch("/api/chat-sessions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, ...patch }),
+      });
+    } catch { /* local monitor sync is best-effort */ }
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (!sessionId) return;
+    let active = true;
+
+    async function pollAgentMessages() {
+      try {
+        const res = await fetch(`/api/chat-sessions?sessionId=${encodeURIComponent(sessionId)}`, { cache: "no-store" });
+        if (!res.ok) return;
+
+        const { session } = await res.json();
+        if (!active || !session) return;
+
+        if (session.status === "closed") setAgentMode(false);
+
+        let hadIncoming = false;
+        setMessages(prev => {
+          const existingIds = new Set(prev.map(message => message.id));
+          const incoming = session.messages
+            .filter((message: Message) => (message.role === "agent" || message.role === "system") && !existingIds.has(message.id))
+            .map((message: Message) => ({
+              id: message.id,
+              role: message.role,
+              text: message.text,
+              createdAt: message.createdAt,
+            }));
+
+          if (incoming.length === 0) return prev;
+          hadIncoming = true;
+          incoming.forEach((message: Message) => syncedMessageIdsRef.current.add(message.id));
+          return [...prev, ...incoming];
+        });
+
+        if (hadIncoming) updateRemoteSession({ readBy: "visitor" });
+      } catch { /* polling should never break the chat UI */ }
+    }
+
+    pollAgentMessages();
+    const timer = window.setInterval(pollAgentMessages, 3000);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+    };
+  }, [sessionId, updateRemoteSession]);
+
   /* ── Add bot message (optionally streaming) ── */
   const addBot = useCallback((text: string, newQR?: string[]) => {
-    setMessages(p => [...p, { role: "assistant", text }]);
+    const message = createMessage("assistant", text);
+    setMessages(p => [...p, message]);
+    syncChatMessage(message);
     if (newQR !== undefined) setQR(newQR);
-  }, []);
+  }, [syncChatMessage]);
 
   /* ── Submit consultation booking → /api/book (Google Calendar + Meet) ── */
   const submitBooking = useCallback(async (
@@ -144,7 +351,13 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: data.name, email: data.contact, service: "Human Agent Request", message: `HUMAN AGENT REQUEST\nContact: ${data.contact}\nIssue: ${data.issue}` }),
+        body: JSON.stringify({
+          name: data.name,
+          contact: data.contact,
+          email: isValidEmail(data.contact) ? data.contact : "",
+          service: "Human Agent Request",
+          message: `HUMAN AGENT REQUEST\nContact: ${data.contact}\nIssue: ${data.issue}`,
+        }),
       });
     } catch { /* silent */ }
   }, []);
@@ -214,10 +427,23 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       const final = { ...human, issue: t } as Record<string, string>;
       const { name = "", contact = "" } = final;
       setFlow("idle"); setHuman({});
+      setAgentMode(true);
       submitHumanRequest(final);
+      updateRemoteSession({ visitorName: name, visitorContact: contact, status: "needs_agent" });
+      const handoffUrl = buildHumanHandoffUrl(final);
       addBot(
-        `✅ **Got it!**\n\n👤 **Name:** ${name}\n📬 **Contact:** ${contact}\n💬 **Issue:** ${t}\n\nA team member will reach out to you **within a few hours**.\n\nFor urgent matters: 📞 **+234 808 626 9431** or 📧 **syberspace247@gmail.com**`,
-        QUICK_REPLIES_DEFAULT
+        `**Got it.** I can connect you directly with a human agent on WhatsApp now.
+
+**Name:** ${name}
+**Contact:** ${contact}
+**Issue:** ${t}
+
+[Open WhatsApp chat](${handoffUrl})
+
+This opens a chat with **+234 815 151 9625** and includes your details in the first message.
+
+I've also sent an email notification to our team with this request.`,
+        []
       ); return true;
     }
     return false;
@@ -237,11 +463,14 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
     abortRef.current = new AbortController();
 
     // Insert streaming placeholder
-    setMessages(p => [...p, { role: "assistant", text: "", streaming: true }]);
+    const streamingMessage = createMessage("assistant", "");
+    setMessages(p => [...p, { ...streamingMessage, streaming: true }]);
 
     try {
       const apiMessages = [
-        ...history.map(m => ({ role: m.role, content: m.text })),
+        ...history
+          .filter(m => !m.streaming)
+          .map(m => ({ role: m.role === "user" ? "user" : "assistant", content: m.text })),
         { role: "user", content: userMsg },
       ];
 
@@ -275,7 +504,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
               accumulated += delta;
               setMessages(p => {
                 const copy = [...p];
-                copy[copy.length - 1] = { role: "assistant", text: accumulated, streaming: true };
+                copy[copy.length - 1] = { ...streamingMessage, text: accumulated, streaming: true };
                 return copy;
               });
             }
@@ -286,9 +515,10 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       // Finalise (remove streaming flag)
       setMessages(p => {
         const copy = [...p];
-        copy[copy.length - 1] = { role: "assistant", text: accumulated };
+        copy[copy.length - 1] = { ...streamingMessage, text: accumulated };
         return copy;
       });
+      syncChatMessage({ ...streamingMessage, text: accumulated });
 
       // Pick context-aware quick replies
       const l = accumulated.toLowerCase();
@@ -305,26 +535,35 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       if (e instanceof Error && e.name === "AbortError") return;
       setMessages(p => {
         const copy = [...p];
-        copy[copy.length - 1] = { role: "assistant", text: "Sorry, I hit a snag. Please try again or reach us directly at **syberspace247@gmail.com** or **+234 808 626 9431**." };
+        const fallback = "Sorry, I hit a snag. Please try again or reach us at **syberspace247@gmail.com**, or use WhatsApp human-agent handoff at **+234 815 151 9625**.";
+        copy[copy.length - 1] = { ...streamingMessage, text: fallback };
+        syncChatMessage({ ...streamingMessage, text: fallback });
         return copy;
       });
       setQR(["Try again", "Talk to a human", "Book consultation"]);
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [syncChatMessage]);
 
   /* ── Main send handler ── */
   const send = useCallback((text?: string) => {
     const msg = (text ?? input).trim();
     if (!msg || busy) return;
     setInput("");
-    const newMessages: Message[] = [...messages, { role: "user", text: msg }];
+    const userMessage = createMessage("user", msg);
+    const newMessages: Message[] = [...messages, userMessage];
     setMessages(newMessages);
+    syncChatMessage(userMessage, agentMode ? { status: "needs_agent" } : undefined);
     setQR([]);
 
     // Active flow takes priority
     if (flow !== "idle") { setTimeout(() => handleFlow(msg), 400); return; }
+
+    if (agentMode) {
+      updateRemoteSession({ status: "needs_agent" });
+      return;
+    }
 
     // Check for local intent triggers
     const localFlow = detectLocalIntent(msg);
@@ -337,7 +576,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
     // Everything else → AI
     setTimeout(() => streamAI(newMessages, msg), 0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input, busy, flow, messages, booking, human, streamAI, addBot]);
+  }, [input, busy, flow, messages, booking, human, agentMode, streamAI, addBot, syncChatMessage, updateRemoteSession]);
 
   return (
     <AnimatePresence>
@@ -361,7 +600,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
               <div className="flex items-center gap-1.5 text-xs" style={{ color: "#10b981" }}>
                 <motion.span animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 2, repeat: Infinity }}
                   className="w-1.5 h-1.5 rounded-full bg-emerald-400 block" />
-                {busy ? "Typing…" : "Online · replies instantly"}
+                {agentMode ? "Connected to human agent" : busy ? "Typing…" : "Online · replies instantly"}
               </div>
             </div>
             <motion.button onClick={onClose} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
@@ -382,8 +621,15 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
                   <div className="max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed"
                     style={msg.role === "user"
                       ? { background: "#06b6d4", color: "#0a0f1e", borderBottomRightRadius: 4 }
-                      : { background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-primary)", borderBottomLeftRadius: 4 }}>
-                    {msg.role === "assistant" ? <BotMessage text={msg.text} /> : msg.text}
+                      : msg.role === "agent"
+                        ? { background: "rgba(6,182,212,0.08)", border: "1px solid rgba(6,182,212,0.24)", color: "var(--text-primary)", borderBottomLeftRadius: 4 }
+                        : { background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-primary)", borderBottomLeftRadius: 4 }}>
+                    {msg.role === "agent" && (
+                      <span className="block text-[10px] font-semibold mb-1 uppercase tracking-wide" style={{ color: "var(--accent-cyan)" }}>
+                        Human agent
+                      </span>
+                    )}
+                    {msg.role !== "user" ? <BotMessage text={msg.text} /> : msg.text}
                   </div>
                 </motion.div>
               ))}
@@ -423,7 +669,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
             <input type="text" value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
-              placeholder={FLOW_PLACEHOLDER[flow]}
+              placeholder={agentMode ? "Message the human agent..." : FLOW_PLACEHOLDER[flow]}
               disabled={busy && flow === "idle"}
               className="flex-1 px-4 py-2.5 rounded-xl text-sm theme-input disabled:opacity-60" />
             <motion.button onClick={() => send()} disabled={busy && flow === "idle"}

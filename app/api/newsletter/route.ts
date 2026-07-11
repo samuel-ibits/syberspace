@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
           <h2 style="color:#06b6d4;margin-bottom:8px">You're in! 🎉</h2>
           <p style="color:#94a3b8;line-height:1.6">Thanks for subscribing to Syberspace Insights. You'll receive practical AI tips, Nigerian business case studies, and early access to new tools.</p>
           <p style="color:#94a3b8;line-height:1.6">In the meantime, feel free to explore our services or book a <strong style="color:#e2e8f0">free AI audit</strong> to see exactly how AI can help your business.</p>
-          <a href="https://syberspace.com.ng" style="display:inline-block;margin-top:20px;padding:12px 24px;background:linear-gradient(135deg,#06b6d4,#7c3aed);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Visit Syberspace →</a>
+          <a href="https://syberspace.com.ng" style="display:inline-block;margin-top:20px;padding:12px 24px;background:#06b6d4;color:#0a0f1e;border-radius:8px;text-decoration:none;font-weight:600">Visit Syberspace →</a>
           <p style="margin-top:24px;font-size:12px;color:#475569">You can unsubscribe at any time by replying to this email.</p>
         </div>
       `,

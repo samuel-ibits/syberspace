@@ -138,8 +138,8 @@ export default function Booking({ onOpenChat }: { onOpenChat: () => void }) {
               {submitted ? (
                 <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                    className="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4"
-                    style={{ background: "linear-gradient(135deg, #06b6d4, #7c3aed)" }}>✓</motion.div>
+                    className="w-16 h-16 rounded-full flex items-center justify-center text-2xl mx-auto mb-4"
+                    style={{ background: "var(--accent-cyan)", color: "#0a0f1e" }}>✓</motion.div>
                   <h4 className="text-xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>Message Sent!</h4>
                   <p style={{ color: "var(--text-muted)" }}>We'll be in touch within 24 hours.</p>
                 </motion.div>
@@ -169,8 +169,8 @@ export default function Booking({ onOpenChat }: { onOpenChat: () => void }) {
                   </div>
                   {sendError && <p className="text-sm text-red-500">{sendError}</p>}
                   <motion.button type="submit" disabled={sending} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                    className="w-full py-3 rounded-xl text-white font-semibold text-sm disabled:opacity-60"
-                    style={{ background: "linear-gradient(to right, #06b6d4, #7c3aed)" }}>
+                    className="w-full py-3 rounded-xl font-semibold text-sm disabled:opacity-60 transition-opacity hover:opacity-90"
+                    style={{ background: "var(--accent-cyan)", color: "#0a0f1e" }}>
                     {sending ? "Sending…" : "Send Message"}
                   </motion.button>
                 </motion.form>

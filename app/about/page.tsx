@@ -208,8 +208,8 @@ export default function AboutPage() {
           Book a free 30-minute AI audit and we&apos;ll map out exactly where AI can save your business time and money.
         </p>
         <Link href="/#booking"
-          className="inline-block px-8 py-4 rounded-xl font-semibold text-white transition-transform hover:scale-105"
-          style={{ background: "linear-gradient(135deg,#06b6d4,#7c3aed)" }}>
+          className="inline-block px-8 py-4 rounded-xl font-semibold transition-transform hover:scale-105"
+          style={{ background: "var(--accent-cyan)", color: "#0a0f1e" }}>
           Book Free AI Audit →
         </Link>
       </section>

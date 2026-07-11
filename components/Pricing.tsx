@@ -50,7 +50,7 @@ export default function Pricing() {
             <span className="text-sm font-medium" style={{ color: annual ? "var(--text-faint)" : "var(--text-primary)" }}>Monthly</span>
             <motion.button onClick={() => setAnnual(!annual)}
               className="relative w-12 h-6 rounded-full transition-colors duration-300"
-              style={{ background: annual ? "linear-gradient(to right, #06b6d4, #7c3aed)" : "var(--bg-elevated)", border: "1px solid var(--border)" }}>
+              style={{ background: annual ? "var(--accent-cyan)" : "var(--bg-elevated)", border: "1px solid var(--border)" }}>
               <motion.span animate={{ x: annual ? 24 : 0 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm" />
             </motion.button>
@@ -113,8 +113,8 @@ export default function Pricing() {
               <motion.a href="#booking" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                 className="block w-full text-center py-3 rounded-full font-semibold text-sm transition-all"
                 style={plan.highlight ? {
-                  background: "linear-gradient(to right, #06b6d4, #7c3aed)",
-                  color: "white",
+                  background: "var(--accent-cyan)",
+                  color: "#0a0f1e",
                   boxShadow: "0 4px 16px rgba(6,182,212,0.25)",
                 } : {
                   border: "1.5px solid var(--border-strong)",

@@ -75,8 +75,8 @@ export default function Contact() {
             <div className="flex gap-3 flex-wrap">
               <a href="https://wa.me/2348086269431?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services."
                 target="_blank" rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-                style={{ background: "#25D366" }}>
+                className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+                style={{ background: "var(--accent-cyan)", color: "#0a0f1e" }}>
                 💬 WhatsApp Us
               </a>
               <a href="mailto:syberspace247@gmail.com"
