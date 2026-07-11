@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
+import { SERVICE_PAGES } from "@/lib/service-pages";
 
 const services = [
   { icon: "⚙️", title: "Process Automation", description: "Eliminate repetitive tasks. We automate workflows, approvals, reporting, and internal operations — saving your team hundreds of hours monthly.", features: ["Workflow automation", "Scheduled jobs", "API integrations", "Error handling & alerts"], accentDark: "0,212,255",  accentLight: "0,153,187",  badge: "Most Popular" },
@@ -10,6 +11,10 @@ const services = [
   { icon: "📊", title: "Data Analysis",        description: "Transform raw numbers into actionable intelligence. AI-driven dashboards, trend detection, forecasting, and executive reports.",             features: ["Interactive dashboards", "Predictive analytics", "Anomaly detection", "Auto-reporting"], accentDark: "236,72,153",  accentLight: "219,39,119" },
   { icon: "🧠", title: "AI Consultation",      description: "Not sure where to start? Our AI experts audit your business, identify high-ROI opportunities, and build your AI roadmap.",                   features: ["AI audit", "ROI assessment", "Implementation roadmap", "Ongoing advisory"], accentDark: "234,179,8",   accentLight: "202,138,4"  },
 ];
+
+const serviceHrefs: Record<string, string> = Object.fromEntries(
+  SERVICE_PAGES.map(service => [service.shortName, `/services/${service.slug}`]),
+);
 
 const cardVariants = {
   hidden:  { opacity: 0, y: 40, scale: 0.97 },
@@ -29,13 +34,13 @@ export default function Services() {
           viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }} className="text-center mb-16">
           <div className="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4"
             style={{ background: "rgba(109,40,217,0.08)", border: "1px solid rgba(109,40,217,0.18)", color: "var(--accent-violet)" }}>
-            What We Do
+            AI services for business and website owners
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
-            AI Services That <span className="gradient-text">Plug Right In</span>
+            AI Services That <span className="gradient-text">Plug Into Your Website and Workflows</span>
           </h2>
           <p className="max-w-xl mx-auto text-lg" style={{ color: "var(--text-muted)" }}>
-            We don't ask you to rebuild. We integrate AI into what you already have.
+            We help business owners automate operations and help website owners capture, qualify, and respond to more leads.
           </p>
         </motion.div>
 
@@ -98,9 +103,9 @@ function ServiceCard({ s }: { s: typeof services[0] }) {
         ))}
       </ul>
 
-      <a href="#booking" className="inline-flex items-center gap-1 mt-5 text-sm font-semibold"
+      <a href={serviceHrefs[s.title] ?? "#booking"} className="inline-flex items-center gap-1 mt-5 text-sm font-semibold"
         style={{ color: "var(--accent-cyan)" }}>
-        Get started
+        Learn more about {s.title}
         <motion.svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
           animate={{ x: [0, 3, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

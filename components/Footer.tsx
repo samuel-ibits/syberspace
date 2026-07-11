@@ -1,8 +1,12 @@
 "use client";
 import { motion, type Variants } from "framer-motion";
 import Logo from "./Logo";
+import { SERVICE_PAGES } from "@/lib/service-pages";
 
-const services = ["Process Automation", "Web Scraping", "Data Cleaning", "AI Bots", "Data Analysis", "AI Consultation"];
+const services = SERVICE_PAGES.map(service => ({
+  label: service.shortName,
+  href: `/services/${service.slug}`,
+}));
 const company  = [
   { label: "About Us",      href: "/about"         },
   { label: "Pricing",       href: "#pricing"        },
@@ -66,8 +70,8 @@ export default function Footer() {
             <h4 className="font-semibold text-sm mb-4" style={{ color: "var(--text-primary)" }}>Services</h4>
             <ul className="space-y-2.5">
               {services.map(s => (
-                <li key={s}>
-                  <motion.a href="#services" whileHover={{ x: 4 }} className="text-sm block transition-colors" style={{ color: "var(--text-muted)" }}>{s}</motion.a>
+                <li key={s.href}>
+                  <motion.a href={s.href} whileHover={{ x: 4 }} className="text-sm block transition-colors" style={{ color: "var(--text-muted)" }}>{s.label}</motion.a>
                 </li>
               ))}
             </ul>

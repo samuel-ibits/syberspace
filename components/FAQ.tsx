@@ -24,6 +24,10 @@ const faqs = [
     a: "Yes. We integrate with WhatsApp Business, Instagram, your website, CRMs, ERPs, Google Workspace, Shopify, Paystack, Flutterwave, and most popular business tools. Custom integrations are available on Growth and Enterprise plans.",
   },
   {
+    q: "Can Syberspace help website owners get more leads?",
+    a: "Yes. We can add AI chatbots, lead capture flows, booking assistants, WhatsApp handoff, and analytics to your website so visitors can become qualified leads instead of bouncing.",
+  },
+  {
     q: "Is my business data safe?",
     a: "Absolutely. We follow industry-standard data security practices. Your data is encrypted in transit and at rest, never sold or shared with third parties, and you retain full ownership of all your data at all times.",
   },

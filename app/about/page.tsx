@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SITE_URL } from "@/lib/service-pages";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About Syberspace AI Automation Company",
   description: "Syberspace is Nigeria's leading AI-as-a-Service company. We make enterprise-grade AI accessible to every business — from Lagos to the world.",
+};
+
+metadata.description =
+  "Learn about Syberspace, a Nigerian AI automation company helping business and website owners add AI chatbots, workflow automation, data tools, and analytics.";
+metadata.alternates = {
+  canonical: `${SITE_URL}/about`,
+};
+metadata.openGraph = {
+  title: "About Syberspace AI Automation Company",
+  description:
+    "Syberspace helps business and website owners in Nigeria and across Africa adopt AI automation, chatbots, and data systems without rebuilding.",
+  url: `${SITE_URL}/about`,
+  type: "website",
 };
 
 const values = [

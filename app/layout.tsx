@@ -5,24 +5,31 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 const SITE_URL = "https://syberspace.com.ng";
 const SITE_NAME = "Syberspace";
-const TITLE = "Syberspace | AI Automation Services Nigeria — Process Automation, AI Bots & Data Analysis";
-const DESCRIPTION =
-  "Syberspace is a Nigerian AI-as-a-Service company that plugs cutting-edge AI into your existing business. We offer process automation, web scraping, data cleaning, custom AI bots, data analysis, and AI strategy consultation — with results in under 2 weeks. No rebuilding required.";
+const SEO_TITLE = "AI Automation Services for Nigerian Businesses | Syberspace";
+const SEO_DESCRIPTION =
+  "Syberspace helps business and website owners in Nigeria add AI chatbots, workflow automation, web scraping, data cleaning, analytics, and AI consulting without rebuilding their systems.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: TITLE,
+    default: SEO_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
-  description: DESCRIPTION,
+  description: SEO_DESCRIPTION,
   keywords: [
     "AI automation Nigeria",
+    "AI automation services Nigeria",
     "AI as a service Nigeria",
     "process automation Nigeria",
+    "business automation Nigeria",
+    "AI chatbot for website Nigeria",
     "AI bots for business",
+    "AI tools for business owners",
+    "AI tools for website owners",
     "web scraping service",
+    "web scraping services Nigeria",
     "data cleaning service",
+    "data cleaning services Nigeria",
     "data analysis Nigeria",
     "AI consultation Nigeria",
     "business automation Africa",
@@ -39,28 +46,34 @@ export const metadata: Metadata = {
   category: "Technology",
   alternates: {
     canonical: SITE_URL,
+    types: {
+      "text/plain": [
+        { url: "/llms.txt", title: "AI-readable Syberspace summary" },
+        { url: "/llms-full.txt", title: "Full AI-readable Syberspace service guide" },
+      ],
+    },
   },
   openGraph: {
     type: "website",
     locale: "en_NG",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: TITLE,
-    description: DESCRIPTION,
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Syberspace — AI-as-a-Service for Nigerian Businesses",
+        alt: "Syberspace AI automation services for Nigerian businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-    images: ["/og-image.png"],
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
+    images: ["/opengraph-image"],
     creator: "@syberspace",
   },
   robots: {
@@ -85,7 +98,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)",  color: "#0a0f1e" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0f1e" },
     { media: "(prefers-color-scheme: light)", color: "#f5f7ff" },
   ],
 };
