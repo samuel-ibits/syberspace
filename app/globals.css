@@ -140,8 +140,33 @@ body {
   box-shadow: 0 0 0 3px rgba(0,153,187,0.12);
 }
 
+select.theme-input {
+  color-scheme: dark;
+}
+
+select.theme-input option,
+select.theme-input optgroup {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+select.theme-input option:checked {
+  background: var(--accent-cyan);
+  color: #0a0f1e;
+}
+
 [data-theme="light"] .theme-input:focus {
   box-shadow: 0 0 0 3px rgba(0,153,187,0.15);
+}
+
+[data-theme="light"] select.theme-input {
+  color-scheme: light;
+}
+
+[data-theme="light"] select.theme-input option,
+[data-theme="light"] select.theme-input optgroup {
+  background: #ffffff;
+  color: #0a0f1e;
 }
 
 /* ══════════════════════════════════════════
