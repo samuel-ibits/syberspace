@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { useCounter } from "@/hooks/useCounter";
+import CustomIcon from "@/components/CustomIcon";
 
 const HeroCanvas = dynamic(() => import("@/components/HeroCanvas"), { ssr: false });
 
@@ -155,9 +156,7 @@ export default function Hero() {
         style={{ color: "var(--text-faint)" }}
       >
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+          <CustomIcon name="chevron-down" className="h-5 w-5" />
         </motion.div>
       </motion.div>
     </section>

@@ -18,6 +18,7 @@ import Newsletter   from "@/components/Newsletter";
 import Booking      from "@/components/Booking";
 import Footer       from "@/components/Footer";
 import AIChatWidget from "@/components/AIChatWidget";
+import CustomIcon   from "@/components/CustomIcon";
 import CustomCursor from "@/components/CustomCursor";
 
 export default function HomeClient() {
@@ -59,9 +60,7 @@ export default function HomeClient() {
             aria-label="Open AI chat"
           >
             <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 3 }}>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-              </svg>
+              <CustomIcon name="message" className="h-6 w-6" />
             </motion.div>
             <motion.div className="absolute inset-0 rounded-full border-2 border-cyan-400"
               animate={{ scale: [1, 1.5, 1.8], opacity: [0.6, 0.3, 0] }} transition={{ duration: 2, repeat: Infinity }} />

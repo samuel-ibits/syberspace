@@ -1,5 +1,7 @@
 "use client";
+
 import { motion } from "framer-motion";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 const cases = [
   {
@@ -8,9 +10,9 @@ const cases = [
     industry: "Healthcare",
     challenge: "Their support team was overwhelmed handling 300+ daily patient queries via WhatsApp and email, with average response times exceeding 6 hours.",
     solution: "Deployed an AI-powered WhatsApp chatbot trained on their FAQ database and appointment system, integrated with their booking calendar.",
-    results: ["82% of queries handled automatically", "Response time cut from 6hrs → under 2 mins", "Support team workload reduced by 70%", "Patient satisfaction up 40%"],
+    results: ["82% of queries handled automatically", "Response time cut from 6hrs to under 2 mins", "Support team workload reduced by 70%", "Patient satisfaction up 40%"],
     color: "#06b6d4",
-    icon: "🏥",
+    icon: "healthcare" as CustomIconName,
   },
   {
     tag: "Data Analytics + Automation",
@@ -20,17 +22,17 @@ const cases = [
     solution: "Built a real-time data scraping and analytics pipeline that monitors 5 competitor platforms, auto-updates their pricing, and sends daily insight reports.",
     results: ["Price monitoring automated 100%", "4 hours/day of manual work eliminated", "Pricing decisions now data-driven in real time", "Gross margin improved by 12%"],
     color: "#7c3aed",
-    icon: "📊",
+    icon: "chart" as CustomIconName,
   },
   {
     tag: "Workflow Automation",
     company: "LogiFlow",
     industry: "Logistics",
     challenge: "Client onboarding required 11 manual steps across 4 departments, taking 3 days average and causing frequent errors in documentation.",
-    solution: "Mapped and automated the entire onboarding workflow — from contract generation to system provisioning — using a custom AI orchestration layer.",
-    results: ["Onboarding time: 3 days → 2 hours", "Documentation errors eliminated", "Processing capacity increased 5×", "₦2.4M/month in operational savings"],
+    solution: "Mapped and automated the entire onboarding workflow from contract generation to system provisioning using a custom AI orchestration layer.",
+    results: ["Onboarding time cut from 3 days to 2 hours", "Documentation errors eliminated", "Processing capacity increased 5x", "NGN 2.4M/month in operational savings"],
     color: "#06b6d4",
-    icon: "🚚",
+    icon: "truck" as CustomIconName,
   },
 ];
 
@@ -71,10 +73,12 @@ export default function CaseStudies() {
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
               className="rounded-2xl overflow-hidden theme-card flex flex-col"
             >
-              {/* Header */}
               <div className="p-6 pb-4" style={{ borderBottom: "1px solid var(--border)" }}>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-3xl">{c.icon}</span>
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl"
+                    style={{ background: `${c.color}14`, color: c.color, border: `1px solid ${c.color}24` }}>
+                    <CustomIcon name={c.icon} className="h-6 w-6" />
+                  </span>
                   <div>
                     <p className="font-bold text-base" style={{ color: "var(--text-primary)" }}>{c.company}</p>
                     <p className="text-xs" style={{ color: "var(--text-faint)" }}>{c.industry}</p>
@@ -86,7 +90,6 @@ export default function CaseStudies() {
                 </span>
               </div>
 
-              {/* Body */}
               <div className="p-6 flex flex-col flex-1 gap-5">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: "var(--text-faint)" }}>Challenge</p>
@@ -99,11 +102,13 @@ export default function CaseStudies() {
                 <div className="mt-auto">
                   <p className="text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: "var(--text-faint)" }}>Results</p>
                   <ul className="space-y-1.5">
-                    {c.results.map((r) => (
-                      <li key={r} className="flex items-start gap-2 text-sm">
-                        <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-xs"
-                          style={{ background: `${c.color}18`, color: c.color }}>✓</span>
-                        <span style={{ color: "var(--text-primary)" }}>{r}</span>
+                    {c.results.map(result => (
+                      <li key={result} className="flex items-start gap-2 text-sm">
+                        <span className="mt-0.5 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center"
+                          style={{ background: `${c.color}18`, color: c.color }}>
+                          <CustomIcon name="check" className="h-3 w-3" />
+                        </span>
+                        <span style={{ color: "var(--text-primary)" }}>{result}</span>
                       </li>
                     ))}
                   </ul>

@@ -1,5 +1,32 @@
 "use client";
+
 import { motion } from "framer-motion";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
+
+const contactItems = [
+  {
+    icon: "location" as CustomIconName,
+    title: "Office Address",
+    lines: ["After 2nd Transformer, 4 Abdullahi Sabah St,", "Momoh Sani Ave, Gwagwalada 902101,", "Federal Capital Territory, Nigeria"],
+  },
+  {
+    icon: "phone" as CustomIconName,
+    title: "Phone",
+    lines: ["+234 808 626 9431"],
+    href: "tel:+2348086269431",
+  },
+  {
+    icon: "mail" as CustomIconName,
+    title: "Email",
+    lines: ["syberspace247@gmail.com"],
+    href: "mailto:syberspace247@gmail.com",
+  },
+  {
+    icon: "clock" as CustomIconName,
+    title: "Business Hours",
+    lines: ["Monday - Saturday: 8:00am - 6:00pm WAT", "Sunday: By appointment only"],
+  },
+];
 
 export default function Contact() {
   return (
@@ -20,12 +47,11 @@ export default function Contact() {
             Visit or <span className="gradient-text">get in touch</span>
           </h2>
           <p className="text-lg max-w-xl mx-auto" style={{ color: "var(--text-muted)" }}>
-            Based in Gwagwalada, FCT — serving clients across Nigeria and beyond.
+            Based in Gwagwalada, FCT - serving clients across Nigeria and beyond.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-          {/* Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -33,36 +59,16 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            {[
-              {
-                icon: "📍",
-                title: "Office Address",
-                lines: ["After 2nd Transformer, 4 Abdullahi Sabah St,", "Momoh Sani Ave, Gwagwalada 902101,", "Federal Capital Territory, Nigeria"],
-              },
-              {
-                icon: "📞",
-                title: "Phone",
-                lines: ["+234 808 626 9431"],
-                href: "tel:+2348086269431",
-              },
-              {
-                icon: "📧",
-                title: "Email",
-                lines: ["syberspace247@gmail.com"],
-                href: "mailto:syberspace247@gmail.com",
-              },
-              {
-                icon: "🕐",
-                title: "Business Hours",
-                lines: ["Monday – Saturday: 8:00am – 6:00pm WAT", "Sunday: By appointment only"],
-              },
-            ].map(item => (
+            {contactItems.map(item => (
               <div key={item.title} className="flex gap-4 p-5 rounded-2xl theme-card">
-                <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl"
+                  style={{ background: "var(--badge-bg)", border: "1px solid var(--badge-border)", color: "var(--accent-cyan)" }}>
+                  <CustomIcon name={item.icon} className="h-6 w-6" />
+                </span>
                 <div>
                   <p className="font-semibold text-sm mb-1.5" style={{ color: "var(--text-primary)" }}>{item.title}</p>
-                  {item.lines.map((line, i) =>
-                    item.href && i === 0 ? (
+                  {item.lines.map((line, index) =>
+                    item.href && index === 0 ? (
                       <a key={line} href={item.href} className="block text-sm hover:underline" style={{ color: "#06b6d4" }}>{line}</a>
                     ) : (
                       <p key={line} className="text-sm" style={{ color: "var(--text-muted)" }}>{line}</p>
@@ -75,19 +81,20 @@ export default function Contact() {
             <div className="flex gap-3 flex-wrap">
               <a href="https://wa.me/2348086269431?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services."
                 target="_blank" rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
                 style={{ background: "var(--accent-cyan)", color: "#0a0f1e" }}>
-                💬 WhatsApp Us
+                <CustomIcon name="whatsapp" className="h-4 w-4" />
+                WhatsApp Us
               </a>
               <a href="mailto:syberspace247@gmail.com"
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
                 style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)", color: "var(--text-primary)" }}>
-                ✉️ Send Email
+                <CustomIcon name="mail" className="h-4 w-4" />
+                Send Email
               </a>
             </div>
           </motion.div>
 
-          {/* Map */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Logo from "@/components/Logo";
+import CustomIcon from "@/components/CustomIcon";
 
 export const metadata: Metadata = {
   title: "Terms of Service | Syberspace",
@@ -150,9 +151,9 @@ export default function TermsOfService() {
             <Section title="17. Contact Us">
               <div className="mt-3 p-4 rounded-xl" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
                 <p><strong style={{ color: "var(--text-primary)" }}>{COMPANY}</strong></p>
-                <p>📧 <a href={`mailto:${EMAIL}`} className="underline" style={{ color: "var(--accent-cyan)" }}>{EMAIL}</a></p>
-                <p>📞 {PHONE}</p>
-                <p>📱 <a href="https://web.facebook.com/syberspacenetwork" className="underline" style={{ color: "var(--accent-cyan)" }}>facebook.com/syberspacenetwork</a></p>
+                <p className="mt-2 flex items-center gap-2"><CustomIcon name="mail" className="h-4 w-4" /> <a href={`mailto:${EMAIL}`} className="underline" style={{ color: "var(--accent-cyan)" }}>{EMAIL}</a></p>
+                <p className="mt-2 flex items-center gap-2"><CustomIcon name="phone" className="h-4 w-4" /> {PHONE}</p>
+                <p className="mt-2 flex items-center gap-2"><CustomIcon name="facebook" className="h-4 w-4" /> <a href="https://web.facebook.com/syberspacenetwork" className="underline" style={{ color: "var(--accent-cyan)" }}>facebook.com/syberspacenetwork</a></p>
               </div>
             </Section>
 

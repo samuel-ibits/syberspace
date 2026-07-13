@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ChatSessionStatus } from "@/lib/chat-types";
+import CustomIcon from "@/components/CustomIcon";
 
 type Message = { id: string; role: "user" | "assistant" | "agent" | "system"; text: string; createdAt: string; streaming?: boolean };
 type FlowStep = "idle" | "book_name" | "book_email" | "book_service" | "book_time" | "human_name" | "human_contact" | "human_issue";
@@ -100,9 +101,7 @@ function BotMessage({ text }: { text: string }) {
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white self-start"
               style={{ background: "#06b6d4", boxShadow: "0 2px 8px rgba(6,182,212,0.3)" }}>
               {soloLink[1]}
-              <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <CustomIcon name="external" className="h-3 w-3 flex-shrink-0" />
             </a>
           );
         }
@@ -117,9 +116,7 @@ function BotMessage({ text }: { text: string }) {
               className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white self-start"
               style={{ background: "#06b6d4", boxShadow: "0 2px 8px rgba(6,182,212,0.3)" }}>
               {label}
-              <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <CustomIcon name="external" className="h-3 w-3 flex-shrink-0" />
             </a>
           );
         }
@@ -148,11 +145,11 @@ function BotMessage({ text }: { text: string }) {
 /* ── Structured flow prompts ────────────────────── */
 const FLOW_PROMPT: Record<FlowStep, string> = {
   idle:           "",
-  book_name:      "I'd love to book a **free 30-minute consultation** for you! 📅\n\nWhat's your **full name**?",
+  book_name:      "I'd love to book a **free 30-minute consultation** for you.\n\nWhat's your **full name**?",
   book_email:     "Thanks! What's the best **email address** to reach you at?",
   book_service:   "Which service are you most interested in?\n\n1. Process Automation\n2. Web Scraping\n3. Data Cleaning\n4. AI Bots\n5. Data Analysis\n6. AI Consultation\n7. Not sure yet\n\nType the number or name.",
   book_time:      "What **day and time** works best? (e.g. 'Tuesday afternoon', 'Monday 10am')\n\nWe'll create a **Google Meet** link and send you a calendar invite.",
-  human_name:     "I'll connect you with one of our human consultants right away. 🤝\n\nWhat's your **full name**?",
+  human_name:     "I'll connect you with one of our human consultants right away.\n\nWhat's your **full name**?",
   human_contact:  "What's the best **phone number or email** to reach you?",
   human_issue:    "Briefly, what do you need help with?",
 };
@@ -407,7 +404,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
           ? `\n\n📹 Your Google Meet link:\n[Join Google Meet](${meetLink})`
           : "";
         addBot(
-          `✅ **Booking confirmed!**\n\n👤 **Name:** ${name}\n📧 **Email:** ${email}\n⚙️ **Service:** ${service}\n🕐 **Preferred time:** ${time}${meetLine}\n\nA calendar invite has been sent to **${email}**. Our consultant will confirm and reschedule to your exact preferred time if needed.\n\nIs there anything else I can help with?`,
+          `**Booking confirmed!**\n\n**Name:** ${name}\n**Email:** ${email}\n**Service:** ${service}\n**Preferred time:** ${time}${meetLine}\n\nA calendar invite has been sent to **${email}**. Our consultant will confirm and reschedule to your exact preferred time if needed.\n\nIs there anything else I can help with?`,
           QUICK_REPLIES_DEFAULT
         );
       });
@@ -605,9 +602,7 @@ I've also sent an email notification to our team with this request.`,
             </div>
             <motion.button onClick={onClose} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
               className="ml-auto" style={{ color: "var(--text-muted)" }}>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <CustomIcon name="x" className="h-5 w-5" />
             </motion.button>
           </div>
 
@@ -647,7 +642,7 @@ I've also sent an email notification to our team with this request.`,
                 {qr.map(q => (
                   <motion.button key={q} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     onClick={() => send(q)} disabled={busy}
-                    className="text-xs px-3 py-1.5 rounded-full mb-1 disabled:opacity-40"
+                    className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full mb-1 disabled:opacity-40"
                     style={{ border: "1px solid var(--border-strong)", color: "var(--accent-cyan)", background: "var(--badge-bg)" }}>
                     {q}
                   </motion.button>
@@ -655,9 +650,10 @@ I've also sent an email notification to our team with this request.`,
                 {flow !== "idle" && (
                   <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                     onClick={cancelFlow} disabled={busy}
-                    className="text-xs px-3 py-1.5 rounded-full mb-1 disabled:opacity-40"
+                    className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full mb-1 disabled:opacity-40"
                     style={{ border: "1px solid #ef4444", color: "#ef4444", background: "rgba(239,68,68,0.08)" }}>
-                    ✕ Cancel
+                    <CustomIcon name="x" className="h-3 w-3" />
+                    Cancel
                   </motion.button>
                 )}
               </motion.div>
@@ -676,9 +672,7 @@ I've also sent an email notification to our team with this request.`,
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
               className="w-10 h-10 rounded-xl flex items-center justify-center text-white flex-shrink-0 disabled:opacity-50"
               style={{ background: "#06b6d4" }}>
-              <svg className="w-4 h-4 text-[#0a0f1e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
+              <CustomIcon name="send" className="h-4 w-4 text-[#0a0f1e]" />
             </motion.button>
           </div>
         </motion.div>

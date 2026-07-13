@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import CustomIcon from "@/components/CustomIcon";
 
 export default function Newsletter() {
   const [email, setEmail]     = useState("");
@@ -35,7 +36,10 @@ export default function Newsletter() {
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
         >
-          <span className="text-4xl mb-4 block">📬</span>
+          <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl"
+            style={{ background: "rgba(124,58,237,0.12)", border: "1px solid rgba(124,58,237,0.24)", color: "var(--accent-violet)" }}>
+            <CustomIcon name="mail" className="h-8 w-8" />
+          </span>
           <div className="inline-block px-4 py-1 rounded-full text-sm font-medium mb-4"
             style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)", color: "var(--accent-violet)" }}>
             Newsletter
@@ -56,7 +60,10 @@ export default function Newsletter() {
                 className="py-4 px-6 rounded-2xl text-sm font-semibold"
                 style={{ background: "rgba(5,150,105,0.12)", border: "1px solid rgba(5,150,105,0.3)", color: "#059669" }}
               >
-                ✅ You&apos;re in! Welcome to the Syberspace community.
+                <span className="inline-flex items-center gap-2">
+                  <CustomIcon name="check" className="h-4 w-4" />
+                  You&apos;re in! Welcome to the Syberspace community.
+                </span>
               </motion.div>
             ) : (
               <motion.form
