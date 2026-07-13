@@ -1,12 +1,14 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 const stats = [
-  { value: 50,  suffix: "+", label: "Businesses Powered",    icon: "🏢", color: "#06b6d4" },
-  { value: 120, suffix: "+", label: "Projects Delivered",    icon: "🚀", color: "#7c3aed" },
-  { value: 3,   suffix: "+", label: "Years of Experience",   icon: "📅", color: "#06b6d4" },
-  { value: 98,  suffix: "%", label: "Client Satisfaction",   icon: "⭐", color: "#7c3aed" },
+  { value: 50, suffix: "+", label: "Businesses Powered", icon: "building" as CustomIconName, color: "#06b6d4" },
+  { value: 120, suffix: "+", label: "Projects Delivered", icon: "rocket" as CustomIconName, color: "#7c3aed" },
+  { value: 3, suffix: "+", label: "Years of Experience", icon: "calendar" as CustomIconName, color: "#06b6d4" },
+  { value: 98, suffix: "%", label: "Client Satisfaction", icon: "star" as CustomIconName, color: "#7c3aed" },
 ];
 
 function Counter({ target, suffix, color }: { target: number; suffix: string; color: string }) {
@@ -22,8 +24,12 @@ function Counter({ target, suffix, color }: { target: number; suffix: string; co
     const increment = target / (duration / step);
     const timer = setInterval(() => {
       start += increment;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
     }, step);
     return () => clearInterval(timer);
   }, [inView, target]);
@@ -70,7 +76,10 @@ export default function Stats() {
             >
               <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl"
                 style={{ background: `radial-gradient(circle at 50% 0%, ${s.color}12 0%, transparent 70%)` }} />
-              <span className="text-3xl mb-3">{s.icon}</span>
+              <span className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl"
+                style={{ background: `${s.color}14`, color: s.color, border: `1px solid ${s.color}24` }}>
+                <CustomIcon name={s.icon} className="h-7 w-7" />
+              </span>
               <Counter target={s.value} suffix={s.suffix} color={s.color} />
               <p className="mt-2 text-sm font-medium" style={{ color: "var(--text-muted)" }}>{s.label}</p>
             </motion.div>

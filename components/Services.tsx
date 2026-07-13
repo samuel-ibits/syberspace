@@ -2,14 +2,15 @@
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { SERVICE_PAGES } from "@/lib/service-pages";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 const services = [
-  { icon: "⚙️", title: "Process Automation", description: "Eliminate repetitive tasks. We automate workflows, approvals, reporting, and internal operations — saving your team hundreds of hours monthly.", features: ["Workflow automation", "Scheduled jobs", "API integrations", "Error handling & alerts"], accentDark: "0,212,255",  accentLight: "0,153,187",  badge: "Most Popular" },
-  { icon: "🕷️", title: "Web Scraping",        description: "Extract structured data from any website at scale. Competitor pricing, lead lists, market data — delivered clean and on schedule.",          features: ["Scheduled scraping", "Anti-bot bypass", "Structured output", "Real-time monitoring"], accentDark: "124,58,237",  accentLight: "109,40,217" },
-  { icon: "🧹", title: "Data Cleaning",        description: "Turn messy, inconsistent data into reliable assets. AI-powered deduplication, formatting, enrichment, and validation pipelines.",           features: ["Deduplication", "Format standardization", "Data enrichment", "Quality scoring"], accentDark: "16,185,129",  accentLight: "5,150,105"  },
-  { icon: "🤖", title: "AI Bots",              description: "Deploy intelligent chatbots trained on your business. Customer support, sales qualification, FAQ — running 24/7.",                           features: ["Custom training", "Multi-channel deploy", "Handoff to human", "Analytics dashboard"], accentDark: "249,115,22",  accentLight: "234,88,12"  },
-  { icon: "📊", title: "Data Analysis",        description: "Transform raw numbers into actionable intelligence. AI-driven dashboards, trend detection, forecasting, and executive reports.",             features: ["Interactive dashboards", "Predictive analytics", "Anomaly detection", "Auto-reporting"], accentDark: "236,72,153",  accentLight: "219,39,119" },
-  { icon: "🧠", title: "AI Consultation",      description: "Not sure where to start? Our AI experts audit your business, identify high-ROI opportunities, and build your AI roadmap.",                   features: ["AI audit", "ROI assessment", "Implementation roadmap", "Ongoing advisory"], accentDark: "234,179,8",   accentLight: "202,138,4"  },
+  { icon: "automation" as CustomIconName, title: "Process Automation", description: "Eliminate repetitive tasks. We automate workflows, approvals, reporting, and internal operations — saving your team hundreds of hours monthly.", features: ["Workflow automation", "Scheduled jobs", "API integrations", "Error handling & alerts"], accentDark: "0,212,255",  accentLight: "0,153,187",  badge: "Most Popular" },
+  { icon: "web" as CustomIconName, title: "Web Scraping",        description: "Extract structured data from any website at scale. Competitor pricing, lead lists, market data — delivered clean and on schedule.",          features: ["Scheduled scraping", "Anti-bot bypass", "Structured output", "Real-time monitoring"], accentDark: "124,58,237",  accentLight: "109,40,217" },
+  { icon: "cleaning" as CustomIconName, title: "Data Cleaning",        description: "Turn messy, inconsistent data into reliable assets. AI-powered deduplication, formatting, enrichment, and validation pipelines.",           features: ["Deduplication", "Format standardization", "Data enrichment", "Quality scoring"], accentDark: "16,185,129",  accentLight: "5,150,105"  },
+  { icon: "bot" as CustomIconName, title: "AI Bots",              description: "Deploy intelligent chatbots trained on your business. Customer support, sales qualification, FAQ — running 24/7.",                           features: ["Custom training", "Multi-channel deploy", "Handoff to human", "Analytics dashboard"], accentDark: "249,115,22",  accentLight: "234,88,12"  },
+  { icon: "chart" as CustomIconName, title: "Data Analysis",        description: "Transform raw numbers into actionable intelligence. AI-driven dashboards, trend detection, forecasting, and executive reports.",             features: ["Interactive dashboards", "Predictive analytics", "Anomaly detection", "Auto-reporting"], accentDark: "236,72,153",  accentLight: "219,39,119" },
+  { icon: "brain" as CustomIconName, title: "AI Consultation",      description: "Not sure where to start? Our AI experts audit your business, identify high-ROI opportunities, and build your AI roadmap.",                   features: ["AI audit", "ROI assessment", "Implementation roadmap", "Ongoing advisory"], accentDark: "234,179,8",   accentLight: "202,138,4"  },
 ];
 
 const serviceHrefs: Record<string, string> = Object.fromEntries(
@@ -86,7 +87,10 @@ function ServiceCard({ s }: { s: typeof services[0] }) {
       )}
 
       <motion.div whileHover={{ scale: 1.15, rotate: 5 }} transition={{ type: "spring", stiffness: 300 }}
-        className="text-4xl mb-4 inline-block select-none">{s.icon}</motion.div>
+        className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl"
+        style={{ background: `rgba(${s.accentDark},0.12)`, color: `rgb(${s.accentDark})`, border: `1px solid rgba(${s.accentDark},0.22)` }}>
+        <CustomIcon name={s.icon} className="h-7 w-7" />
+      </motion.div>
 
       <h3 className="text-xl font-bold mb-3" style={{ color: "var(--text-primary)" }}>{s.title}</h3>
       <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>{s.description}</p>
@@ -106,10 +110,9 @@ function ServiceCard({ s }: { s: typeof services[0] }) {
       <a href={serviceHrefs[s.title] ?? "#booking"} className="inline-flex items-center gap-1 mt-5 text-sm font-semibold"
         style={{ color: "var(--accent-cyan)" }}>
         Learn more about {s.title}
-        <motion.svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          animate={{ x: [0, 3, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </motion.svg>
+        <motion.span animate={{ x: [0, 3, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
+          <CustomIcon name="arrow-right" className="h-4 w-4" />
+        </motion.span>
       </a>
     </motion.div>
   );

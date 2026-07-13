@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 const posts = [
   {
@@ -8,7 +9,7 @@ const posts = [
     excerpt: "From automated customer service to intelligent inventory management, here's how small and medium businesses across Nigeria are leveraging AI to do more with less.",
     readTime: "5 min read",
     date: "Jun 2025",
-    icon: "🤖",
+    icon: "bot" as CustomIconName,
     color: "#06b6d4",
   },
   {
@@ -17,7 +18,7 @@ const posts = [
     excerpt: "With over 90 million WhatsApp users in Nigeria, automating your business messaging isn't optional — it's a competitive necessity. Here's how to do it right.",
     readTime: "4 min read",
     date: "May 2025",
-    icon: "💬",
+    icon: "message" as CustomIconName,
     color: "#7c3aed",
   },
   {
@@ -26,7 +27,7 @@ const posts = [
     excerpt: "Most businesses are sitting on a goldmine of untapped data. This guide shows you how AI-powered analytics can surface insights you're currently missing entirely.",
     readTime: "6 min read",
     date: "May 2025",
-    icon: "📊",
+    icon: "chart" as CustomIconName,
     color: "#06b6d4",
   },
   {
@@ -35,7 +36,7 @@ const posts = [
     excerpt: "A static website tells people what you do. An AI-powered platform qualifies leads, books appointments, and answers questions — all while you sleep.",
     readTime: "4 min read",
     date: "Apr 2025",
-    icon: "🌐",
+    icon: "web" as CustomIconName,
     color: "#7c3aed",
   },
 ];
@@ -81,11 +82,12 @@ export default function Blog() {
               <div className="h-28 flex items-center justify-center relative overflow-hidden"
                 style={{ background: `linear-gradient(135deg, ${post.color}18, ${post.color}08)`, borderBottom: "1px solid var(--border)" }}>
                 <motion.span
-                  className="text-5xl"
+                  className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                  style={{ color: post.color, background: `${post.color}14`, border: `1px solid ${post.color}24` }}
                   animate={{ y: [0, -4, 0] }}
                   transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
                 >
-                  {post.icon}
+                  <CustomIcon name={post.icon} className="h-9 w-9" />
                 </motion.span>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{ background: `radial-gradient(circle at 50% 100%, ${post.color}20, transparent 70%)` }} />

@@ -1,11 +1,13 @@
 "use client";
+
 import { motion } from "framer-motion";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 const steps = [
-  { number: "01", title: "Book a Consultation",     description: "Chat with our AI consultant, send an email, or book a Google Meet call directly. We'll understand your business and current setup.", icon: "📅" },
-  { number: "02", title: "AI Audit & Proposal",     description: "We analyze your workflows, data, and systems. Within 48 hours you receive a tailored AI integration plan with clear ROI estimates.", icon: "🔍" },
-  { number: "03", title: "Integration & Deployment",description: "Our team plugs AI into your existing stack. No rebuilding. We handle the tech — you stay focused on your business.", icon: "🔧" },
-  { number: "04", title: "Monitor & Scale",          description: "Track performance through your dashboard. We monitor, optimize, and scale your AI services as your needs grow.", icon: "📈" },
+  { number: "01", title: "Book a Consultation", description: "Chat with our AI consultant, send an email, or book a Google Meet call directly. We'll understand your business and current setup.", icon: "calendar" as CustomIconName },
+  { number: "02", title: "AI Audit & Proposal", description: "We analyze your workflows, data, and systems. Within 48 hours you receive a tailored AI integration plan with clear ROI estimates.", icon: "search" as CustomIconName },
+  { number: "03", title: "Integration & Deployment", description: "Our team plugs AI into your existing stack. No rebuilding. We handle the tech while you stay focused on your business.", icon: "tools" as CustomIconName },
+  { number: "04", title: "Monitor & Scale", description: "Track performance through your dashboard. We monitor, optimize, and scale your AI services as your needs grow.", icon: "chart" as CustomIconName },
 ];
 
 export default function HowItWorks() {
@@ -13,7 +15,6 @@ export default function HowItWorks() {
     <section id="how-it-works" className="py-24 relative overflow-hidden"
       style={{ background: "var(--bg-elevated)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
 
-      {/* Center line */}
       <motion.div initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
         transition={{ duration: 1.5, ease: "easeInOut" }}
         className="absolute left-1/2 top-0 bottom-0 w-px origin-top hidden lg:block"
@@ -49,9 +50,9 @@ export default function HowItWorks() {
                 className="p-6 rounded-2xl h-full theme-card">
                 <motion.div initial={{ scale: 0, rotate: -20 }} whileInView={{ scale: 1, rotate: 0 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.14 + 0.2, type: "spring", stiffness: 260, damping: 20 }}
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
-                  style={{ background: "linear-gradient(135deg, rgba(0,212,255,0.1), rgba(124,58,237,0.1))", border: "1px solid var(--border-strong)" }}>
-                  {step.icon}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: "linear-gradient(135deg, rgba(0,212,255,0.1), rgba(124,58,237,0.1))", border: "1px solid var(--border-strong)", color: "var(--accent-cyan)" }}>
+                  <CustomIcon name={step.icon} className="h-6 w-6" />
                 </motion.div>
                 <div className="text-xs font-bold tracking-widest mb-2" style={{ color: "var(--accent-cyan)" }}>{step.number}</div>
                 <h3 className="text-lg font-bold mb-2" style={{ color: "var(--text-primary)" }}>{step.title}</h3>

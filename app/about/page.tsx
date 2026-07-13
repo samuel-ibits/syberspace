@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_URL } from "@/lib/service-pages";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 export const metadata: Metadata = {
   title: "About Syberspace AI Automation Company",
@@ -21,12 +22,12 @@ metadata.openGraph = {
 };
 
 const values = [
-  { icon: "🎯", title: "Results First",        desc: "Every engagement is measured by real business outcomes — time saved, costs reduced, revenue grown. We don't count outputs, we count impact." },
-  { icon: "🤝", title: "True Partnership",      desc: "We sit inside your team, not outside it. Your challenges become ours. We don't disappear after delivery — we stay." },
-  { icon: "🔒", title: "Trust & Security",      desc: "Enterprise-grade encryption, signed NDAs, and zero data sharing. Your business data stays yours — always." },
-  { icon: "🌍", title: "Global Standards",      desc: "Built for Nigeria, calibrated to global standards. Our solutions integrate with international platforms and follow global best practices." },
-  { icon: "⚡", title: "Speed to Value",        desc: "Most clients see measurable ROI within 2–4 weeks. We move fast, ship iteratively, and optimise continuously." },
-  { icon: "🧠", title: "Continuous Learning",   desc: "AI evolves weekly. So do we. Our team stays at the frontier so your business benefits from the latest breakthroughs automatically." },
+  { icon: "target" as CustomIconName, title: "Results First",        desc: "Every engagement is measured by real business outcomes — time saved, costs reduced, revenue grown. We don't count outputs, we count impact." },
+  { icon: "handshake" as CustomIconName, title: "True Partnership",      desc: "We sit inside your team, not outside it. Your challenges become ours. We don't disappear after delivery — we stay." },
+  { icon: "security" as CustomIconName, title: "Trust & Security",      desc: "Enterprise-grade encryption, signed NDAs, and zero data sharing. Your business data stays yours — always." },
+  { icon: "globe" as CustomIconName, title: "Global Standards",      desc: "Built for Nigeria, calibrated to global standards. Our solutions integrate with international platforms and follow global best practices." },
+  { icon: "lightning" as CustomIconName, title: "Speed to Value",        desc: "Most clients see measurable ROI within 2–4 weeks. We move fast, ship iteratively, and optimise continuously." },
+  { icon: "brain" as CustomIconName, title: "Continuous Learning",   desc: "AI evolves weekly. So do we. Our team stays at the frontier so your business benefits from the latest breakthroughs automatically." },
 ];
 
 const team = [
@@ -80,12 +81,15 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
-              { icon: "🇳🇬", label: "Headquartered in Nigeria", sub: "Abuja & Lagos" },
-              { icon: "🌍", label: "Serving clients across Africa", sub: "Nigeria · Ghana · Kenya · South Africa" },
-              { icon: "🌐", label: "Global integrations", sub: "Compatible with 100+ worldwide platforms" },
+              { icon: "location" as CustomIconName, label: "Headquartered in Nigeria", sub: "Abuja & Lagos" },
+              { icon: "globe" as CustomIconName, label: "Serving clients across Africa", sub: "Nigeria · Ghana · Kenya · South Africa" },
+              { icon: "web" as CustomIconName, label: "Global integrations", sub: "Compatible with 100+ worldwide platforms" },
             ].map(item => (
               <div key={item.label} className="flex flex-col items-center gap-2">
-                <span className="text-4xl">{item.icon}</span>
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl"
+                  style={{ background: "var(--badge-bg)", border: "1px solid var(--badge-border)", color: "var(--accent-cyan)" }}>
+                  <CustomIcon name={item.icon} className="h-8 w-8" />
+                </span>
                 <p className="font-semibold" style={{ color: "var(--text-primary)" }}>{item.label}</p>
                 <p className="text-sm" style={{ color: "var(--text-muted)" }}>{item.sub}</p>
               </div>
@@ -110,13 +114,16 @@ export default function AboutPage() {
             </p>
             <div className="space-y-4">
               {[
-                { icon: "📊", title: "Monthly performance reviews",       desc: "We track KPIs and share monthly reports on automation performance, cost savings, and opportunities for improvement." },
-                { icon: "🔧", title: "Continuous optimisation",           desc: "Your AI solutions are updated as models improve and your business needs evolve. No extra charge on Growth+ plans." },
-                { icon: "🎓", title: "Team training & documentation",     desc: "We train your team to use and manage AI tools confidently, with written runbooks for every deployment." },
-                { icon: "📞", title: "Dedicated account management",      desc: "Growth and Enterprise clients get a named account manager reachable by phone, WhatsApp, or email." },
+                { icon: "chart" as CustomIconName, title: "Monthly performance reviews",       desc: "We track KPIs and share monthly reports on automation performance, cost savings, and opportunities for improvement." },
+                { icon: "tools" as CustomIconName, title: "Continuous optimisation",           desc: "Your AI solutions are updated as models improve and your business needs evolve. No extra charge on Growth+ plans." },
+                { icon: "training" as CustomIconName, title: "Team training & documentation",     desc: "We train your team to use and manage AI tools confidently, with written runbooks for every deployment." },
+                { icon: "phone" as CustomIconName, title: "Dedicated account management",      desc: "Growth and Enterprise clients get a named account manager reachable by phone, WhatsApp, or email." },
               ].map(item => (
                 <div key={item.title} className="flex gap-4 p-4 rounded-xl" style={{ background: "var(--bg-surface)", border: "1px solid var(--border)" }}>
-                  <span className="text-2xl flex-shrink-0 mt-0.5">{item.icon}</span>
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl"
+                    style={{ background: "var(--badge-bg)", border: "1px solid var(--badge-border)", color: "var(--accent-cyan)" }}>
+                    <CustomIcon name={item.icon} className="h-6 w-6" />
+                  </span>
                   <div>
                     <p className="font-semibold text-sm mb-1" style={{ color: "var(--text-primary)" }}>{item.title}</p>
                     <p className="text-sm" style={{ color: "var(--text-muted)" }}>{item.desc}</p>
@@ -144,7 +151,10 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map(v => (
               <div key={v.title} className="p-6 rounded-2xl" style={{ background: "var(--bg-elevated)", border: "1px solid var(--border)" }}>
-                <span className="text-3xl block mb-3">{v.icon}</span>
+                <span className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl"
+                  style={{ background: "var(--badge-bg)", border: "1px solid var(--badge-border)", color: "var(--accent-cyan)" }}>
+                  <CustomIcon name={v.icon} className="h-7 w-7" />
+                </span>
                 <h3 className="font-bold mb-2" style={{ color: "var(--text-primary)" }}>{v.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{v.desc}</p>
               </div>

@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { useCounter } from "@/hooks/useCounter";
+import CustomIcon, { type CustomIconName } from "@/components/CustomIcon";
 
 const faqs = [
   { q: "Do I need to rebuild my existing systems?",           a: "No. That's our core promise. We integrate AI directly into your existing applications, databases, and workflows. We work with what you have." },
@@ -52,13 +53,16 @@ export default function About() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {[
-                { icon: "🌍", title: "Global reach", desc: "Serving clients across Nigeria, Ghana, Kenya & South Africa" },
-                { icon: "🔄", title: "Post-project support", desc: "Monthly reviews, continuous optimisation & dedicated account management" },
-                { icon: "⚡", title: "Fast deployment", desc: "Most solutions go live within 5–10 business days" },
-                { icon: "🔒", title: "Enterprise security", desc: "Encrypted data, signed NDAs, full client data ownership" },
+                { icon: "globe" as CustomIconName, title: "Global reach", desc: "Serving clients across Nigeria, Ghana, Kenya & South Africa" },
+                { icon: "automation" as CustomIconName, title: "Post-project support", desc: "Monthly reviews, continuous optimisation & dedicated account management" },
+                { icon: "lightning" as CustomIconName, title: "Fast deployment", desc: "Most solutions go live within 5–10 business days" },
+                { icon: "security" as CustomIconName, title: "Enterprise security", desc: "Encrypted data, signed NDAs, full client data ownership" },
               ].map(item => (
                 <div key={item.title} className="flex gap-3 p-3 rounded-xl" style={{ background: "var(--bg-base)", border: "1px solid var(--border)" }}>
-                  <span className="text-xl flex-shrink-0">{item.icon}</span>
+                  <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg"
+                    style={{ background: "var(--badge-bg)", border: "1px solid var(--badge-border)", color: "var(--accent-cyan)" }}>
+                    <CustomIcon name={item.icon} className="h-5 w-5" />
+                  </span>
                   <div>
                     <p className="text-xs font-semibold" style={{ color: "var(--text-primary)" }}>{item.title}</p>
                     <p className="text-xs" style={{ color: "var(--text-muted)" }}>{item.desc}</p>
@@ -86,9 +90,7 @@ export default function About() {
                 >
                   <summary className="flex items-center justify-between font-semibold text-sm list-none select-none" style={{ color: "var(--text-primary)" }}>
                     {faq.q}
-                    <svg className="w-4 h-4 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: "var(--text-faint)" }}>
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+                    <CustomIcon name="chevron-down" className="h-4 w-4 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" style={{ color: "var(--text-faint)" }} />
                   </summary>
                   <p className="mt-3 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>{faq.a}</p>
                 </motion.details>

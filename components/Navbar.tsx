@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
+import CustomIcon from "@/components/CustomIcon";
 
 const links = [
   { label: "Services",     href: "#services"     },
@@ -90,11 +91,7 @@ export default function Navbar() {
               style={{ color: "var(--text-muted)" }}
               onClick={() => setOpen(!open)}
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {open
-                  ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
-              </svg>
+              <CustomIcon name={open ? "x" : "menu"} className="h-6 w-6" />
             </button>
           </div>
         </div>

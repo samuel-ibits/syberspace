@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import CustomIcon from "@/components/CustomIcon";
 
 const plans = [
   {
@@ -102,9 +103,7 @@ export default function Pricing() {
                   <motion.li key={f} initial={{ opacity: 0, x: -8 }} whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }} transition={{ delay: i * 0.12 + fi * 0.05 }}
                     className="flex items-start gap-2.5 text-sm" style={{ color: "var(--text-muted)" }}>
-                    <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="var(--accent-cyan)" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
+                    <CustomIcon name="check" className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: "var(--accent-cyan)" }} />
                     {f}
                   </motion.li>
                 ))}
