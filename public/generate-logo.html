@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Generate Syberspace Logo PNG</title></head>
+<body style="background:#0a0f1e;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;font-family:sans-serif;color:#fff;gap:24px">
+
+<h2 style="margin:0">Syberspace Logo Generator</h2>
+
+<canvas id="cv" style="border-radius:12px"></canvas>
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+  <button onclick="render(4,'dark')"  style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,#06b6d4,#7c3aed);color:#fff;border:none;cursor:pointer;font-size:14px;font-weight:600">Download Dark 4×</button>
+  <button onclick="render(4,'light')" style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,#06b6d4,#7c3aed);color:#fff;border:none;cursor:pointer;font-size:14px;font-weight:600">Download Light 4×</button>
+  <button onclick="render(4,'transparent')" style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,#06b6d4,#7c3aed);color:#fff;border:none;cursor:pointer;font-size:14px;font-weight:600">Download Transparent 4×</button>
+</div>
+
+<p id="info" style="color:#9ca3af;font-size:13px">Click a button to generate and download.</p>
+
+<script>
+const W = 220, H = 48;
+
+function render(scale, theme) {
+  const cv = document.getElementById('cv');
+  cv.width  = W * scale;
+  cv.height = H * scale;
+  cv.style.width  = W * 2 + 'px';
+  cv.style.height = H * 2 + 'px';
+
+  const ctx = cv.getContext('2d');
+  ctx.scale(scale, scale);
+
+  // Background
+  if (theme === 'dark') {
+    ctx.fillStyle = '#0a0f1e';
+    ctx.fillRect(0, 0, W, H);
+  } else if (theme === 'light') {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, W, H);
+  }
+  // transparent: no fill
+
+  // Gradient helper
+  function grad(x1,y1,x2,y2) {
+    const g = ctx.createLinearGradient(x1,y1,x2,y2);
+    g.addColorStop(0, '#00d4ff');
+    g.addColorStop(1, '#7c3aed');
+    return g;
+  }
+
+  // Monitor shell (stroke)
+  ctx.strokeStyle = grad(2,2,42,30);
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  roundRect(ctx, 2, 2, 40, 28, 3.5);
+  ctx.stroke();
+
+  // Screen fill glow
+  const glowGrad = ctx.createLinearGradient(4,4,4,28);
+  glowGrad.addColorStop(0, 'rgba(0,212,255,0.3)');
+  glowGrad.addColorStop(1, 'rgba(124,58,237,0)');
+  ctx.fillStyle = glowGrad;
+  ctx.globalAlpha = 0.4;
+  ctx.beginPath();
+  roundRect(ctx, 4, 4, 36, 24, 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  // Stand neck
+  ctx.fillStyle = grad(19,30,25,35);
+  ctx.beginPath();
+  roundRect(ctx, 19, 30, 6, 5, 1);
+  ctx.fill();
+
+  // Stand base
+  ctx.fillStyle = grad(13,35,31,38);
+  ctx.beginPath();
+  roundRect(ctx, 13, 35, 18, 3, 1.5);
+  ctx.fill();
+
+  // Chart line (glow effect: draw twice)
+  const pts = [[8,22],[13,17],[18,19],[23,13],[28,15],[33,10],[38,12]];
+  function drawLine(lw, alpha) {
+    ctx.strokeStyle = grad(8,22,38,10);
+    ctx.lineWidth = lw;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.globalAlpha = alpha;
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+  drawLine(4, 0.25);   // glow blur approximation
+  drawLine(1.8, 1);    // crisp line
+
+  // Chart dots
+  const dotColors = ['#00d4ff','#5b8fff','#7c3aed','#00d4ff','#00d4ff'];
+  [[8,22],[18,19],[23,13],[33,10],[38,12]].forEach(([x,y],i) => {
+    ctx.fillStyle = dotColors[i];
+    ctx.beginPath();
+    ctx.arc(x, y, 1.5, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // Text color
+  const textColor = theme === 'light' ? '#0a0f1e' : '#ffffff';
+
+  ctx.font = "700 22px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  ctx.letterSpacing = '-0.5px';
+
+  // "Syber" solid
+  ctx.fillStyle = textColor;
+  ctx.fillText('Syber', 52, 30);
+
+  // "space" gradient
+  const textGrad = ctx.createLinearGradient(113, 10, 220, 30);
+  textGrad.addColorStop(0, '#00d4ff');
+  textGrad.addColorStop(1, '#7c3aed');
+  ctx.fillStyle = textGrad;
+  ctx.fillText('space', 113, 30);
+
+  // Download
+  const suffix = theme === 'transparent' ? 'transparent' : theme;
+  const link = document.createElement('a');
+  link.download = `syberspace-logo-${suffix}-${W*scale}x${H*scale}.png`;
+  link.href = cv.toDataURL('image/png');
+  link.click();
+
+  document.getElementById('info').textContent =
+    `✅ Downloaded: ${link.download}`;
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+// Auto-render dark version on load
+window.onload = () => render(4, 'dark');
+</script>
+</body>
+</html>
