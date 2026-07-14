@@ -3,11 +3,11 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const SITE_URL = "https://syberspace.com.ng";
+const SITE_URL = "https://syberspacesolutions.live";
 const SITE_NAME = "Syberspace";
-const SEO_TITLE = "AI Automation Services for Nigerian Businesses | Syberspace";
+const SEO_TITLE = "AI Customer Support and Omni-Platform Automation for African Businesses | Syberspace";
 const SEO_DESCRIPTION =
-  "Syberspace helps business and website owners in Nigeria add AI chatbots, workflow automation, web scraping, data cleaning, analytics, and AI consulting without rebuilding their systems.";
+  "Syberspace helps African business and website owners add AI customer support, omni-platform automation, lead capture, workflow automation, analytics, and AI consulting without rebuilding their systems.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,6 +39,12 @@ export const metadata: Metadata = {
     "artificial intelligence Nigeria",
     "machine learning services Nigeria",
     "AI agency Nigeria",
+    "AI customer support Africa",
+    "omni-platform automation Africa",
+    "omnichannel AI support Africa",
+    "lead capture automation Africa",
+    "Zendesk alternative Nigeria",
+    "customer support automation SMEs",
   ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
@@ -65,7 +71,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Syberspace AI automation services for Nigerian businesses",
+        alt: "Syberspace AI customer support and omni-platform automation for African businesses",
       },
     ],
   },

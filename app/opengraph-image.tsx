@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Syberspace — AI-as-a-Service for Nigerian Businesses";
+export const alt = "Syberspace - AI customer support and omni-platform automation for African businesses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -34,7 +34,7 @@ export default function OGImage() {
           marginBottom: 28,
         }}>
           <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#00d4ff", display: "flex" }} />
-          <span style={{ color: "#00d4ff", fontSize: 16, fontWeight: 600 }}>AI-as-a-Service · Nigeria</span>
+          <span style={{ color: "#00d4ff", fontSize: 16, fontWeight: 600 }}>AI Support · Omni-Platform Automation · Africa</span>
         </div>
 
         {/* Logo wordmark */}
@@ -45,7 +45,7 @@ export default function OGImage() {
 
         {/* Tagline */}
         <p style={{ fontSize: 28, color: "#94a3b8", margin: 0, textAlign: "center", maxWidth: 700, lineHeight: 1.4 }}>
-          Plug AI into your existing business — no rebuilding required.
+          AI customer support, lead capture, and workflow automation for African businesses.
         </p>
 
         {/* Service pills */}
@@ -62,7 +62,7 @@ export default function OGImage() {
 
         {/* URL */}
         <p style={{ position: "absolute", bottom: 32, fontSize: 18, color: "#475569", margin: 0 }}>
-          syberspace.com.ng
+          syberspacesolutions.live
         </p>
       </div>
     ),

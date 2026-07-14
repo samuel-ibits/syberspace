@@ -5,7 +5,7 @@ import type { ChatSessionStatus } from "@/lib/chat-types";
 import CustomIcon from "@/components/CustomIcon";
 
 type Message = { id: string; role: "user" | "assistant" | "agent" | "system"; text: string; createdAt: string; streaming?: boolean };
-type FlowStep = "idle" | "book_name" | "book_email" | "book_service" | "book_time" | "human_name" | "human_contact" | "human_issue";
+type FlowStep = "idle" | "book_name" | "book_email" | "book_website" | "book_service" | "book_time" | "human_name" | "human_contact" | "human_issue";
 
 const QUICK_REPLIES_DEFAULT = ["Our services", "Pricing", "Free AI Audit", "Book consultation", "Talk to a human"];
 const CHAT_SESSION_KEY = "syberspace_chat_session_id";
@@ -21,6 +21,13 @@ const SERVICES_MAP: Record<string, string> = {
 const HUMAN_AGENT_WHATSAPP = "2348151519625";
 
 function isValidEmail(v: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+function normalizeWebsiteInput(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed || /^(skip|none|no|not yet|no website|n\/a|na)$/i.test(trimmed)) return "";
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
 
 function createId(prefix: string) {
   const random = typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -147,6 +154,7 @@ const FLOW_PROMPT: Record<FlowStep, string> = {
   idle:           "",
   book_name:      "I'd love to book a **free 30-minute consultation** for you.\n\nWhat's your **full name**?",
   book_email:     "Thanks! What's the best **email address** to reach you at?",
+  book_website:   "Do you have a **website link** we should review before the call?\n\nPaste it here, or type **skip** if you don't have one yet.",
   book_service:   "Which service are you most interested in?\n\n1. Process Automation\n2. Web Scraping\n3. Data Cleaning\n4. AI Bots\n5. Data Analysis\n6. AI Consultation\n7. Not sure yet\n\nType the number or name.",
   book_time:      "What **day and time** works best? (e.g. 'Tuesday afternoon', 'Monday 10am')\n\nWe'll create a **Google Meet** link and send you a calendar invite.",
   human_name:     "I'll connect you with one of our human consultants right away.\n\nWhat's your **full name**?",
@@ -158,6 +166,7 @@ const FLOW_PLACEHOLDER: Record<FlowStep, string> = {
   idle:           "Ask me anything…",
   book_name:      "Your full name…",
   book_email:     "Your email address…",
+  book_website:   "Website URL or 'skip'…",
   book_service:   "Type 1–7 or service name…",
   book_time:      "Preferred day/time or 'flexible'…",
   human_name:     "Your full name…",
@@ -335,7 +344,14 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       const res = await fetch("/api/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: data.name, email: data.email, service: data.service, time: data.time }),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          website: data.website,
+          service: data.service,
+          time: data.time,
+          source: "website chatbot",
+        }),
       });
       const json = await res.json();
       onResult(json.meetLink ?? null);
@@ -384,6 +400,11 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
     if (flow === "book_email") {
       if (!isValidEmail(t)) { addBot("That doesn't look like a valid email — could you double-check it? 🙏", []); return true; }
       const updated = { ...booking, email: t };
+      setBooking(updated); setFlow("book_website");
+      addBot(FLOW_PROMPT.book_website, ["Skip", "No website yet"]); return true;
+    }
+    if (flow === "book_website") {
+      const updated = { ...booking, website: normalizeWebsiteInput(t) };
       setBooking(updated); setFlow("book_service");
       addBot(FLOW_PROMPT.book_service, ["1", "2", "3", "4", "5", "6", "7"]); return true;
     }
@@ -396,7 +417,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
     if (flow === "book_time") {
       const time = t;
       const final = { ...booking, time } as Record<string, string>;
-      const { name = "", email = "", service = "" } = final;
+      const { name = "", email = "", website = "", service = "" } = final;
       setFlow("idle"); setBooking({});
       addBot("⏳ Creating your Google Calendar event and Meet link…", []);
       submitBooking(final, (meetLink) => {
@@ -404,7 +425,7 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
           ? `\n\n📹 Your Google Meet link:\n[Join Google Meet](${meetLink})`
           : "";
         addBot(
-          `**Booking confirmed!**\n\n**Name:** ${name}\n**Email:** ${email}\n**Service:** ${service}\n**Preferred time:** ${time}${meetLine}\n\nA calendar invite has been sent to **${email}**. Our consultant will confirm and reschedule to your exact preferred time if needed.\n\nIs there anything else I can help with?`,
+          `**Booking confirmed!**\n\n**Name:** ${name}\n**Email:** ${email}${website ? `\n**Website:** ${website}` : ""}\n**Service:** ${service}\n**Preferred time:** ${time}${meetLine}\n\nA calendar invite has been sent to **${email}**. Our consultant will review your details before the call and confirm or reschedule to your exact preferred time if needed.\n\nIs there anything else I can help with?`,
           QUICK_REPLIES_DEFAULT
         );
       });
@@ -429,15 +450,15 @@ export default function AIChatWidget({ isOpen, onClose }: { isOpen: boolean; onC
       updateRemoteSession({ visitorName: name, visitorContact: contact, status: "needs_agent" });
       const handoffUrl = buildHumanHandoffUrl(final);
       addBot(
-        `**Got it.** I can connect you directly with a human agent on WhatsApp now.
+        `**Got it.** I've sent this to a human agent and opened the live handoff path.
 
 **Name:** ${name}
 **Contact:** ${contact}
 **Issue:** ${t}
 
-[Open WhatsApp chat](${handoffUrl})
+[Continue on WhatsApp](${handoffUrl})
 
-This opens a chat with **+234 815 151 9625** and includes your details in the first message.
+Your request is also saved in our chat monitor, so our team can continue from your session and follow up through the best channel for you.
 
 I've also sent an email notification to our team with this request.`,
         []
@@ -532,7 +553,7 @@ I've also sent an email notification to our team with this request.`,
       if (e instanceof Error && e.name === "AbortError") return;
       setMessages(p => {
         const copy = [...p];
-        const fallback = "Sorry, I hit a snag. Please try again or reach us at **syberspace247@gmail.com**, or use WhatsApp human-agent handoff at **+234 815 151 9625**.";
+        const fallback = "Sorry, I hit a snag. Please try again or reach us at **syberspace247@gmail.com**, or request a human-agent handoff at **+234 815 151 9625**.";
         copy[copy.length - 1] = { ...streamingMessage, text: fallback };
         syncChatMessage({ ...streamingMessage, text: fallback });
         return copy;

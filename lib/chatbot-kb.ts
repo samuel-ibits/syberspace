@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════
    SYBERSPACE — CHATBOT KNOWLEDGE BASE
    Syber is Syberspace's AI consultant chatbot.
-   Contact: syberspace247@gmail.com | +234 808 626 9431 | WhatsApp handoff: +234 815 151 9625
+   Contact: syberspace247@gmail.com | +234 808 626 9431 | human-agent handoff: +234 815 151 9625
    Facebook: https://web.facebook.com/syberspacenetwork
 ═══════════════════════════════════════════════════════ */
 
@@ -174,13 +174,13 @@ What type of data are you working with — customer records, transactions, produ
 What we build and deploy:
 • Customer support bots (handle FAQs, complaints, returns)
 • Sales qualification bots (capture and score leads)
-• WhatsApp & website chat bots
+• Omni-platform bots for website chat, messaging apps, email, and internal tools
 • Internal HR/IT helpdesk bots
 • Appointment booking bots
 
 Our bots handle **60–80% of all enquiries** without human intervention, and seamlessly hand off complex cases to your team.
 
-**Channels we deploy on:** Website, WhatsApp, Instagram DM, Facebook Messenger, Telegram, Slack.
+**Channels we deploy on:** Website chat, WhatsApp, Instagram DM, Facebook Messenger, Telegram, Slack, email, SMS, and CRM workflows.
 
 Want a bot like this for your business? I can walk you through the setup process.`,
 
@@ -313,7 +313,7 @@ If your industry isn't listed, AI almost certainly applies to your business. The
 
 📧 **Email:** syberspace247@gmail.com *(response within 24 hours)*
 📞 **Phone:** +234 808 626 9431 *(Mon–Fri, 9am–6pm WAT)*
-💬 **WhatsApp human-agent handoff:** +234 815 151 9625
+💬 **Human-agent handoff:** +234 815 151 9625
 💬 **Live chat:** You're already in it! I can escalate to a human agent.
 📅 **Scheduled call:** Book via Calendly for a guaranteed time slot.
 
@@ -323,11 +323,11 @@ Would you like me to connect you with a human agent right now, or is there somet
 
 📧 **Email:** syberspace247@gmail.com
 📞 **Phone:** +234 808 626 9431
-💬 **WhatsApp human-agent handoff:** +234 815 151 9625
+💬 **Human-agent handoff:** +234 815 151 9625
 📅 **Calendly:** Book a free 30-min consultation online
 📱 **Facebook:** facebook.com/syberspacenetwork
 
-Our team responds within **24 hours** on email and **same day** on WhatsApp.
+Our team responds within **24 hours** on email and **same day** through active handoff channels.
 
 Would you like me to help you book a consultation, or connect you directly to a team member?`,
 

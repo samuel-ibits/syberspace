@@ -69,8 +69,10 @@ function buildICS(opts: {
 async function createCalendarEvent(params: {
   name: string;
   email: string;
+  website?: string;
   service: string;
   time: string;
+  source?: string;
   start: Date;
   end: Date;
 }): Promise<{ meetLink: string | null; eventLink: string | null }> {
@@ -99,8 +101,10 @@ async function createCalendarEvent(params: {
       description: [
         `Client: ${params.name}`,
         `Email: ${params.email}`,
+        params.website ? `Website: ${params.website}` : "",
         `Service: ${params.service}`,
         `Preferred time: ${params.time}`,
+        params.source ? `Source: ${params.source}` : "",
         "",
         "⚠️ Placeholder slot — reschedule to client's preferred time if needed.",
       ].join("\n"),
@@ -136,11 +140,13 @@ async function createCalendarEvent(params: {
 }
 
 export async function POST(req: NextRequest) {
-  const { name, email, service, time } = (await req.json()) as {
+  const { name, email, website = "", service, time, source = "" } = (await req.json()) as {
     name: string;
     email: string;
+    website?: string;
     service: string;
     time: string;
+    source?: string;
   };
 
   const start = parseRequestedTime(time);
@@ -152,7 +158,7 @@ export async function POST(req: NextRequest) {
   let usingGoogle = false;
 
   try {
-    const result = await createCalendarEvent({ name, email, service, time, start, end });
+    const result = await createCalendarEvent({ name, email, website, service, time, source, start, end });
     meetLink  = result.meetLink;
     eventLink = result.eventLink;
     usingGoogle = !!meetLink;
@@ -167,7 +173,7 @@ export async function POST(req: NextRequest) {
   }
 
   /* ── 2. Build ICS calendar invite ── */
-  const uid = `syber-${crypto.randomBytes(5).toString("hex")}@syberspace.com.ng`;
+  const uid = `syber-${crypto.randomBytes(5).toString("hex")}@syberspacesolutions.live`;
 
   const icsContent = buildICS({
     uid,
@@ -177,12 +183,14 @@ export async function POST(req: NextRequest) {
       ``,
       `Your free AI consultation with Syberspace is confirmed.`,
       ``,
+      website ? `Website: ${website}` : "",
       `Service: ${service}`,
       `Requested time: ${time}`,
+      source ? `Source: ${source}` : "",
       ``,
       `Join the video call: ${meetLink}`,
       ``,
-      `Questions? Email syberspace247@gmail.com or WhatsApp +234 808 626 9431`,
+      `Questions? Email syberspace247@gmail.com or message/call +234 808 626 9431`,
     ].join("\n"),
     location: meetLink,
     start,
@@ -225,8 +233,10 @@ export async function POST(req: NextRequest) {
             <table style="width:100%;border-collapse:collapse">
               <tr><td style="padding:8px 0;color:#6b7280;width:130px;font-size:14px">Name</td><td style="padding:8px 0;font-weight:600;font-size:14px">${name}</td></tr>
               <tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Email</td><td style="padding:8px 0;font-size:14px"><a href="mailto:${email}" style="color:#06b6d4">${email}</a></td></tr>
+              ${website ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Website</td><td style="padding:8px 0;font-size:14px"><a href="${website}" style="color:#06b6d4">${website}</a></td></tr>` : ""}
               <tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Service</td><td style="padding:8px 0;font-size:14px">${service}</td></tr>
               <tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Preferred time</td><td style="padding:8px 0;font-size:14px">${time}</td></tr>
+              ${source ? `<tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Source</td><td style="padding:8px 0;font-size:14px">${source}</td></tr>` : ""}
               <tr><td style="padding:8px 0;color:#6b7280;font-size:14px">${videoLabel}</td><td style="padding:8px 0;font-size:14px"><a href="${meetLink}" style="color:#06b6d4">${meetLink}</a></td></tr>
             </table>
             ${calRow}
@@ -253,6 +263,7 @@ export async function POST(req: NextRequest) {
           <div style="background:#f9fafb;padding:24px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 8px 8px">
             <p style="color:#374151;font-size:15px">Hi <strong>${name}</strong>, your free AI consultation with Syberspace is confirmed.</p>
             <table style="width:100%;border-collapse:collapse;margin:16px 0">
+              ${website ? `<tr><td style="padding:8px 0;color:#6b7280;width:130px;font-size:14px">Website</td><td style="padding:8px 0;font-size:14px"><a href="${website}" style="color:#06b6d4">${website}</a></td></tr>` : ""}
               <tr><td style="padding:8px 0;color:#6b7280;width:130px;font-size:14px">Service</td><td style="padding:8px 0;font-size:14px">${service}</td></tr>
               <tr><td style="padding:8px 0;color:#6b7280;font-size:14px">Requested time</td><td style="padding:8px 0;font-size:14px">${time}</td></tr>
             </table>
@@ -263,7 +274,7 @@ export async function POST(req: NextRequest) {
               <p style="color:#166534;font-size:13px;margin:0">📅 <strong>Calendar invite attached</strong> — open the .ics file to add this to Google Calendar, Outlook, or Apple Calendar.</p>
             </div>
             <hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0"/>
-            <p style="color:#6b7280;font-size:13px">Questions? Reply to this email or WhatsApp us at <strong>+234 808 626 9431</strong>.</p>
+            <p style="color:#6b7280;font-size:13px">Questions? Reply to this email or message/call us at <strong>+234 808 626 9431</strong>.</p>
           </div>
           <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:12px">Syberspace · syberspace247@gmail.com</p>
         </div>`,

@@ -14,8 +14,8 @@ const posts = [
   },
   {
     tag: "Automation",
-    title: "Why WhatsApp Automation Is the Highest-ROI Investment for Nigerian Businesses",
-    excerpt: "With over 90 million WhatsApp users in Nigeria, automating your business messaging isn't optional — it's a competitive necessity. Here's how to do it right.",
+    title: "Why Omni-Platform Automation Is the Highest-ROI Move for African Businesses",
+    excerpt: "Customers move between websites, messaging apps, email, and social DMs. Here's how African businesses can automate support without locking themselves into one channel.",
     readTime: "4 min read",
     date: "May 2025",
     icon: "message" as CustomIconName,

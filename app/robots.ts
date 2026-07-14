@@ -23,7 +23,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: privatePaths,
       },
     ],
-    sitemap: "https://syberspace.com.ng/sitemap.xml",
-    host: "https://syberspace.com.ng",
+    sitemap: "https://syberspacesolutions.live/sitemap.xml",
+    host: "https://syberspacesolutions.live",
   };
 }

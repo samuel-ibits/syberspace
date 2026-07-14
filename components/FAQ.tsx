@@ -21,11 +21,11 @@ const faqs = [
   },
   {
     q: "Can you integrate with tools we already use?",
-    a: "Yes. We integrate with WhatsApp Business, Instagram, your website, CRMs, ERPs, Google Workspace, Shopify, Paystack, Flutterwave, and most popular business tools. Custom integrations are available on Growth and Enterprise plans.",
+    a: "Yes. We integrate with websites, WhatsApp Business, Instagram, Facebook Messenger, email, SMS, CRMs, ERPs, Google Workspace, Shopify, Paystack, Flutterwave, and most popular business tools. Custom integrations are available on Growth and Enterprise plans.",
   },
   {
     q: "Can Syberspace help website owners get more leads?",
-    a: "Yes. We can add AI chatbots, lead capture flows, booking assistants, WhatsApp handoff, and analytics to your website so visitors can become qualified leads instead of bouncing.",
+    a: "Yes. We can add AI chatbots, lead capture flows, booking assistants, omni-channel human handoff, and analytics to your website so visitors can become qualified leads instead of bouncing.",
   },
   {
     q: "Is my business data safe?",
@@ -130,7 +130,7 @@ export default function FAQ() {
           </a>{" "}
           or{" "}
           <a href={`https://wa.me/2348086269431?text=${encodeURIComponent("Hi Syberspace, I have a question about your services.")}`} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline" style={{ color: "var(--accent-cyan)" }}>
-            chat on WhatsApp
+            message us
           </a>
         </motion.p>
       </div>

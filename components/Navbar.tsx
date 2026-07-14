@@ -7,6 +7,7 @@ import CustomIcon from "@/components/CustomIcon";
 
 const links = [
   { label: "Services",     href: "#services"     },
+  { label: "Compare",      href: "/compare/syberspace-vs-zendesk" },
   { label: "How It Works", href: "#how-it-works"  },
   { label: "Pricing",      href: "#pricing"       },
   { label: "About",        href: "/about"         },

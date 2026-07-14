@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SERVICE_PAGES, SITE_URL } from "@/lib/service-pages";
+import { SEO_LANDING_PAGES } from "@/lib/seo-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -17,12 +18,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${SITE_URL}/free-consultation`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.88,
+    },
     ...SERVICE_PAGES.map(service => ({
       url: `${SITE_URL}/services/${service.slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.85,
     })),
+    ...SEO_LANDING_PAGES.map(page => ({
+      url: `${SITE_URL}/${page.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.82,
+    })),
+    {
+      url: `${SITE_URL}/compare/syberspace-vs-zendesk`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.84,
+    },
+    {
+      url: `${SITE_URL}/trust`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.78,
+    },
     {
       url: `${SITE_URL}/about`,
       lastModified: now,

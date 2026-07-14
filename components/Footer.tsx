@@ -10,6 +10,9 @@ const services = SERVICE_PAGES.map(service => ({
 }));
 const company  = [
   { label: "About Us",      href: "/about"         },
+  { label: "Trust",         href: "/trust"         },
+  { label: "Compare Zendesk", href: "/compare/syberspace-vs-zendesk" },
+  { label: "AI Chat Monitor", href: "/ai-chat-monitor-for-businesses" },
   { label: "Pricing",       href: "#pricing"        },
   { label: "How It Works",  href: "#how-it-works"   },
   { label: "Case Studies",  href: "#case-studies"   },
@@ -97,7 +100,7 @@ export default function Footer() {
               {[
                 { icon: "mail" as CustomIconName, label: "syberspace247@gmail.com", href: "mailto:syberspace247@gmail.com" },
                 { icon: "phone" as CustomIconName, label: "+234 808 626 9431",        href: "tel:+2348086269431"              },
-                { icon: "whatsapp" as CustomIconName, label: "WhatsApp",                 href: "https://wa.me/2348086269431?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services." },
+                { icon: "whatsapp" as CustomIconName, label: "Messaging",                href: "https://wa.me/2348086269431?text=Hi%20Syberspace%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20AI%20services." },
               ].map(c => (
                 <li key={c.label}>
                   <motion.a href={c.href} whileHover={{ x: 4 }} className="flex items-center gap-2 text-sm transition-colors" style={{ color: "var(--text-muted)" }}>
