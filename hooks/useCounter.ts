@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 
 export function useCounter(target: number, duration = 2000, active = false) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(target);
 
   useEffect(() => {
     if (!active) return;
+    setCount(0);
     const startTime = performance.now();
     const tick = (now: number) => {
       const elapsed = now - startTime;

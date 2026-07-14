@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
             ${replyContactIsEmail ? `<a href="mailto:${replyContact}" style="color:#06b6d4">${replyContact}</a>` : `<span style="color:#111827">${replyContact}</span>`}
           </div>` : ""}
         </div>
-        <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:16px">Sent via syberspace.com.ng</p>
+        <p style="font-size:12px;color:#9ca3af;text-align:center;margin-top:16px">Sent via syberspacesolutions.live</p>
       </div>
     `,
   });

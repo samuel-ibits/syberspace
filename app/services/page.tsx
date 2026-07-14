@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SERVICE_PAGES, SITE_URL } from "@/lib/service-pages";
+import { SEO_LANDING_PAGES } from "@/lib/seo-pages";
 
 export const metadata: Metadata = {
   title: "AI Services for Business and Website Owners",
@@ -76,6 +77,28 @@ export default function ServicesPage() {
             </article>
           ))}
         </div>
+
+        <section className="mt-16 rounded-2xl p-6" style={{ background: "var(--bg-surface)", border: "1px solid var(--border)" }}>
+          <h2 className="text-2xl font-bold">Popular searches Syberspace can help with</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+            These pages explain how Syberspace supports common buying decisions around AI customer support, omni-platform automation, lead capture, and workflow automation.
+          </p>
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {SEO_LANDING_PAGES.map(page => (
+              <Link
+                key={page.slug}
+                href={`/${page.slug}`}
+                className="rounded-xl p-4"
+                style={{ background: "var(--bg-base)", border: "1px solid var(--border)", color: "var(--text-primary)" }}
+              >
+                <span className="text-sm font-semibold">{page.metaTitle}</span>
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+                  {page.metaDescription}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
       </section>
     </main>
   );

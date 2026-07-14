@@ -1,4 +1,4 @@
-export const SITE_URL = "https://syberspace.com.ng";
+export const SITE_URL = "https://syberspacesolutions.live";
 
 export type ServicePage = {
   slug: string;
@@ -33,13 +33,13 @@ export const SERVICE_PAGES: ServicePage[] = [
     audience: "Business owners, operations managers, agencies, founders, and website owners in Nigeria and across Africa.",
     outcomes: [
       "Automate repetitive admin, reporting, and follow-up tasks.",
-      "Connect your website, WhatsApp, email, CRM, Google Sheets, and payment tools.",
+      "Connect your website, messaging apps, email, SMS, CRM, Google Sheets, and payment tools.",
       "Reduce manual errors with monitored workflows and alerting.",
       "Launch useful automations in days or weeks, not months.",
     ],
     useCases: [
       "Lead capture from a website into a CRM or Google Sheet.",
-      "Automatic WhatsApp or email follow-up after form submissions.",
+      "Automatic messaging, email, SMS, or CRM follow-up after form submissions.",
       "Daily sales, inventory, finance, or operations reports.",
       "Approval workflows for internal teams.",
     ],
@@ -62,7 +62,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     shortName: "AI Bots",
     metaTitle: "AI Chatbots for Business Websites in Nigeria",
     metaDescription:
-      "Add an AI chatbot to your business website for customer support, lead qualification, bookings, WhatsApp handoff, and 24/7 sales assistance.",
+      "Add an AI chatbot to your business website for customer support, lead qualification, bookings, omni-channel handoff, and 24/7 sales assistance.",
     heroTitle: "AI chatbots for websites that turn visitors into qualified leads",
     heroDescription:
       "Give your website a 24/7 AI assistant that answers customer questions, captures leads, books consultations, and hands serious buyers to a human agent.",
@@ -72,13 +72,13 @@ export const SERVICE_PAGES: ServicePage[] = [
       "Answer common visitor questions instantly.",
       "Qualify website leads before they reach your team.",
       "Capture names, phone numbers, emails, and buyer intent.",
-      "Escalate high-value conversations to WhatsApp or a live monitor.",
+      "Escalate high-value conversations to a live monitor, CRM, email, phone, or messaging channel.",
     ],
     useCases: [
       "Customer support chatbot for a company website.",
       "Sales assistant for pricing, services, and product questions.",
       "Booking assistant that collects consultation details.",
-      "Website lead capture with WhatsApp human handoff.",
+      "Website lead capture with omni-channel human handoff.",
     ],
     faqs: [
       {
@@ -89,7 +89,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       {
         question: "Can I talk to users when the AI hands off?",
         answer:
-          "Yes. Syberspace can route human-agent requests to WhatsApp and to a local chat monitor for live session replies.",
+          "Yes. Syberspace can route human-agent requests to a local chat monitor, email, phone, CRM, or supported messaging channels for live session replies.",
       },
     ],
   },

@@ -10,7 +10,7 @@ Syberspace is an AI-as-a-Service company. We integrate AI into existing business
 Contact:
 - Email: syberspace247@gmail.com
 - Phone: +234 808 626 9431
-- WhatsApp human-agent handoff: +234 815 151 9625
+- Human-agent handoff: +234 815 151 9625
 - Facebook: https://web.facebook.com/syberspacenetwork
 - Booking: handled via AI chat widget (creates Google Calendar + Meet link automatically)
 
@@ -37,7 +37,7 @@ SERVICES (6 core)
 4. AI BOTS
    - Custom chatbots trained on your business: support, sales, FAQ, HR/IT helpdesk, booking bots
    - Handle 60–80% of all enquiries without human input
-   - Channels: Website, WhatsApp, Instagram DM, Facebook Messenger, Telegram, Slack
+   - Channels: Website chat, WhatsApp, Instagram DM, Facebook Messenger, Telegram, Slack, email, SMS, and CRM workflows
 
 5. DATA ANALYSIS
    - Interactive dashboards, revenue forecasting, anomaly detection, churn prediction
@@ -105,7 +105,7 @@ BEHAVIOUR RULES
 - Use **bold** for key terms, bullet points for lists.
 - LINK FORMATTING RULE — critical: whenever you include a URL or action link, ALWAYS place it on its own separate line in markdown format: [Button Label](url). Never embed URLs inside a sentence.
 - Action links to use (always on their own line, markdown format):
-  - WhatsApp human-agent handoff: [WhatsApp Human Agent](https://wa.me/2348151519625)
+  - Human-agent handoff: [Message a Human Agent](https://wa.me/2348151519625)
   - Email: [Email Us](mailto:syberspace247@gmail.com)
   - Facebook: [Follow on Facebook](https://web.facebook.com/syberspacenetwork)
 - Booking is done via the AI chat widget — it creates a Google Calendar event and Google Meet link automatically. Tell users to click "Book consultation" in the quick replies to start the booking flow. Do NOT link to any external booking page.
@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     headers: {
       "Authorization": `Bearer ${apiKey}`,
       "Content-Type": "application/json",
-      "HTTP-Referer": "https://syberspace.com.ng",
+      "HTTP-Referer": "https://syberspacesolutions.live",
       "X-Title": "Syberspace AI Consultant",
     },
     body: JSON.stringify({

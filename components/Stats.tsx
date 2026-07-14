@@ -12,13 +12,14 @@ const stats = [
 ];
 
 function Counter({ target, suffix, color }: { target: number; suffix: string; color: string }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(target);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   useEffect(() => {
     if (!inView) return;
     let start = 0;
+    setCount(0);
     const duration = 1800;
     const step = 16;
     const increment = target / (duration / step);

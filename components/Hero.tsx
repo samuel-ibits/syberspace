@@ -105,11 +105,12 @@ export default function Hero() {
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
         <h1
-          className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6"
+          className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-6"
           style={{ color: "var(--text-primary)", perspective: 1000 }}
         >
-          <div><WordReveal text="AI Automation for Business" delay={0.3} /></div>
-          <div className="gradient-text"><WordReveal text="and Website Owners" delay={0.6} /></div>
+          <div><WordReveal text="AI Customer Support," delay={0.3} /></div>
+          <div className="gradient-text"><WordReveal text="Omni-Platform Automation, Lead Capture," delay={0.6} /></div>
+          <div><WordReveal text="and Workflow Automation for African Businesses." delay={0.9} /></div>
         </h1>
 
         <motion.p
@@ -119,8 +120,9 @@ export default function Hero() {
           className="max-w-2xl mx-auto text-lg sm:text-xl mb-10 leading-relaxed"
           style={{ color: "var(--text-muted)" }}
         >
-          Syberspace helps Nigerian business owners and website owners add AI chatbots,
-          workflow automation, web scraping, analytics, and lead capture to the tools they already use.
+          Syberspace helps African business owners and website owners add AI chatbots,
+          website chat, social messaging, email, SMS, lead capture, workflow automation,
+          and analytics to the tools they already use.
         </motion.p>
 
         <motion.div
