@@ -1,4 +1,4 @@
-export default function Logo({ width = 160, height = 36 }: { width?: number; height?: number }) {
+export default function Logo({ width = 160, height = 36, monochromeText = false }: { width?: number; height?: number; monochromeText?: boolean }) {
   return (
     <svg width={width} height={height} viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -53,7 +53,7 @@ export default function Logo({ width = 160, height = 36 }: { width?: number; hei
         x="113" y="30"
         fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
         fontSize="22" fontWeight="700" letterSpacing="-0.5"
-        fill="url(#logoScreenGrad)"
+        fill={monochromeText ? "var(--text-primary)" : "url(#logoScreenGrad)"}
       >space</text>
     </svg>
   );

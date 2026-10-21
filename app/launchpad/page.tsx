@@ -27,13 +27,11 @@ const steps = [
 
 export default function LaunchpadPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-grid" style={{ backgroundColor: "var(--bg-base)", color: "var(--text-primary)" }}>
+    <main data-theme="light" className="relative min-h-screen overflow-hidden" style={{ backgroundColor: "#ffffff", color: "var(--text-primary)" }}>
       <CustomCursor />
-      <div className="pointer-events-none absolute -left-32 top-12 h-96 w-96 rounded-full blur-3xl" style={{ background: "var(--glow-violet)" }} />
-      <div className="pointer-events-none absolute -right-40 top-1/3 h-[32rem] w-[32rem] rounded-full blur-3xl" style={{ background: "var(--glow-cyan)" }} />
 
       <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
-        <Link href="/" aria-label="Syberspace home"><Logo width={170} height={38} /></Link>
+        <Link href="/" aria-label="Syberspace home"><Logo width={170} height={38} monochromeText /></Link>
         <Link href="/" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold" style={{ border: "1px solid var(--border)", background: "var(--bg-surface)" }}>
           <CustomIcon name="arrow-right" className="h-4 w-4 rotate-180" />
           Back to site
@@ -42,12 +40,8 @@ export default function LaunchpadPage() {
 
       <section className="relative z-10 mx-auto grid max-w-7xl gap-12 px-4 pb-20 pt-8 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:px-8 lg:pb-28 lg:pt-16">
         <div className="lg:sticky lg:top-12">
-          <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] theme-badge-cyan">
-            <CustomIcon name="rocket" className="h-4 w-4" />
-            Syberspace AI Launchpad
-          </div>
-          <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] sm:text-6xl">
-            Turn your next idea into a <span className="gradient-text">working system.</span>
+          <h1 className="text-4xl font-extrabold leading-[1.05] sm:text-6xl">
+            Turn your next idea into a working system.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed" style={{ color: "var(--text-muted)" }}>
             Bring us the problem. We’ll help shape the right AI, automation, data, or digital solution—and give you a clear path from idea to launch.
