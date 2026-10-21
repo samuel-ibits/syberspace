@@ -24,6 +24,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.88,
     },
+    {
+      url: `${SITE_URL}/launchpad`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     ...SERVICE_PAGES.map(service => ({
       url: `${SITE_URL}/services/${service.slug}`,
       lastModified: now,
