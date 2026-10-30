@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Navbar       from "@/components/Navbar";
 import Hero         from "@/components/Hero";
 import Services     from "@/components/Services";
+import WebsiteSprintPromo from "@/components/WebsiteSprintPromo";
 import Positioning  from "@/components/Positioning";
 import HowItWorks   from "@/components/HowItWorks";
 import Stats        from "@/components/Stats";
@@ -32,6 +33,7 @@ export default function HomeClient() {
       <Hero />
       <Partners />
       <Services />
+      <WebsiteSprintPromo />
       <Positioning />
       <Stats />
       <HowItWorks />
