@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "How Syberspace collects, uses, and protects your personal data.",
 };
 
-const EFFECTIVE = "11 June 2025";
+const EFFECTIVE = "3 November 2026";
 const COMPANY   = "Syberspace";
 const EMAIL     = "syberspace247@gmail.com";
 const PHONE     = "+234 815 151 9625";
@@ -45,7 +45,7 @@ export default function PrivacyPolicy() {
               <ul className="mt-3 space-y-2 list-disc list-inside">
                 <li><strong style={{ color: "var(--text-primary)" }}>Contact information</strong> — name, email address, phone number provided via our website forms or chat widget.</li>
                 <li><strong style={{ color: "var(--text-primary)" }}>Business information</strong> — company name, industry, service interests, and details shared during consultations.</li>
-                <li><strong style={{ color: "var(--text-primary)" }}>Usage data</strong> — pages visited, time on site, browser type, and IP address (collected via analytics tools).</li>
+                <li><strong style={{ color: "var(--text-primary)" }}>Usage and campaign data</strong> — pages visited, form-submission events, referral source, browser type, device information, and IP address collected through analytics and advertising tools. We do not send the personal details entered into our forms to Meta Pixel.</li>
                 <li><strong style={{ color: "var(--text-primary)" }}>Client project data</strong> — data you provide or we access as part of delivering contracted AI services (e.g. databases, spreadsheets, APIs).</li>
                 <li><strong style={{ color: "var(--text-primary)" }}>Communication records</strong> — emails, chat transcripts, and call notes from our interactions with you.</li>
               </ul>
@@ -58,6 +58,7 @@ export default function PrivacyPolicy() {
                 <li>Deliver, maintain, and improve contracted AI services.</li>
                 <li>Send service-related notifications (booking confirmations, project updates).</li>
                 <li>Send occasional marketing communications — you may opt out at any time.</li>
+                <li>Measure advertising performance, attribute successful form submissions, and improve campaign relevance.</li>
                 <li>Comply with applicable laws and regulations.</li>
                 <li>Detect and prevent fraud, abuse, or unauthorised access.</li>
               </ul>
@@ -77,7 +78,7 @@ export default function PrivacyPolicy() {
             <Section title="5. Data Sharing">
               <p>We share your data only with:</p>
               <ul className="mt-3 space-y-2 list-disc list-inside">
-                <li><strong style={{ color: "var(--text-primary)" }}>Service providers</strong> — cloud hosting (Vercel, AWS, GCP), email delivery (Gmail/SMTP), calendar services (Google Calendar), and AI model providers (OpenRouter) — solely to deliver our services.</li>
+                <li><strong style={{ color: "var(--text-primary)" }}>Service providers</strong> — cloud hosting (Vercel, AWS, GCP), email delivery (Gmail/SMTP), calendar services (Google Calendar), analytics (Microsoft Clarity), advertising measurement (Meta Pixel), and AI model providers (OpenRouter) — to operate, measure, and improve our services and campaigns.</li>
                 <li><strong style={{ color: "var(--text-primary)" }}>Legal authorities</strong> — when required by law, court order, or to protect our rights.</li>
                 <li><strong style={{ color: "var(--text-primary)" }}>Business transfers</strong> — in the event of a merger or acquisition, your data may transfer with the business (you will be notified).</li>
               </ul>
@@ -120,8 +121,8 @@ export default function PrivacyPolicy() {
             </Section>
 
             <Section title="9. Cookies">
-              <p>Our website uses minimal cookies for essential functionality (theme preferences, session state). We do not use third-party advertising cookies.</p>
-              <p className="mt-3">You can control cookies through your browser settings. Disabling cookies may affect site functionality.</p>
+              <p>Our website uses essential cookies for functionality and third-party analytics or advertising technologies, including Microsoft Clarity and Meta Pixel. Meta Pixel records page visits and successful form-submission events so we can measure campaign performance and build advertising audiences. It does not receive the names, email addresses, phone numbers, or free-text answers entered into our forms from our implementation.</p>
+              <p className="mt-3">Meta and other providers may use cookies or similar identifiers according to their own privacy policies. You can control or block these technologies through your browser settings and advertising preferences. Blocking them does not prevent you from submitting our forms, but it may limit campaign measurement.</p>
             </Section>
 
             <Section title="10. Children's Privacy">

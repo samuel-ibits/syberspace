@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import MetaPixel from "@/components/MetaPixel";
 
 const SITE_URL = "https://syberspacesolutions.live";
 const SITE_NAME = "Syberspace";
@@ -126,6 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+        <MetaPixel />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

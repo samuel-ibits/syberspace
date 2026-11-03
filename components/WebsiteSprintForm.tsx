@@ -3,6 +3,7 @@
 import { useState, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CustomIcon from "@/components/CustomIcon";
+import { trackMetaLead } from "@/lib/meta-pixel";
 import {
   WEBSITE_SPRINT_CATEGORIES,
   WEBSITE_SPRINT_PROJECT_TYPES,
@@ -97,6 +98,12 @@ export default function WebsiteSprintForm() {
         const reference = result.requestId ? ` Reference: ${result.requestId}.` : "";
         throw new Error(`${result.error || "We could not submit your enquiry."}${reference}`);
       }
+      trackMetaLead("fashion_beauty_website_sprint", {
+        content_name: "Syberspace Fashion & Beauty ₦50K Website Sprint",
+        content_category: "fashion_beauty_website_sprint",
+        value: 50000,
+        currency: "NGN",
+      });
       form.reset();
       setSubmitted(true);
     } catch (submitError) {

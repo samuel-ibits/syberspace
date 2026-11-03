@@ -3,6 +3,7 @@
 import { useState, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CustomIcon from "@/components/CustomIcon";
+import { trackMetaLead } from "@/lib/meta-pixel";
 import {
   LAUNCHPAD_CATEGORIES,
   LAUNCHPAD_REFERRAL_SOURCES,
@@ -100,6 +101,10 @@ export default function LaunchpadForm() {
         throw new Error(`${result.error || "We could not submit your application."}${reference}`);
       }
 
+      trackMetaLead("business_launchpad", {
+        content_name: "Syberspace Business Launchpad Application",
+        content_category: "business_launchpad",
+      });
       form.reset();
       setSubmitted(true);
     } catch (submitError) {
