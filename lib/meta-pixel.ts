@@ -19,7 +19,7 @@ export function trackMetaPixelEvent(
 }
 
 export function trackMetaLead(
-  formId: "business_launchpad" | "fashion_beauty_website_sprint",
+  formId: "business_launchpad" | "fashion_beauty_website_sprint" | "instagram_to_orders_sales_plan",
   parameters: MetaPixelParameters = {},
 ) {
   trackMetaPixelEvent("Lead", {

@@ -36,6 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.92,
     },
+    {
+      url: `${SITE_URL}/instagram-to-orders`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.94,
+    },
     ...SERVICE_PAGES.map(service => ({
       url: `${SITE_URL}/services/${service.slug}`,
       lastModified: now,
